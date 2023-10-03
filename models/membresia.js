@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const membresiaSchema = new Schema({
+const membresiaSchema = new mongoose.Schema({
     tipo: String,
     costo: Number,
     fecha_renovacion: Date

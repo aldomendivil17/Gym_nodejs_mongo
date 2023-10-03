@@ -1,11 +1,12 @@
 const MembresiaDao = require('../daos/membresiaDao');
+const Membresia = require('../models/membresia');
 
 class MembresiaController {
   async agregarMembresia() {
     const nuevaMembresia = new Membresia({
-      tipo: 'Semanal',
-      costo: 100,
-      fecha_renovacion: new Date(2032, 10, 10)
+      tipo: 'Anual',
+      costo: 3500,
+      fecha_renovacion: new Date(2032, 10, 23)
     });
 
     await MembresiaDao.agregarMembresia(nuevaMembresia);
