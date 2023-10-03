@@ -1,11 +1,14 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/gimnasio');
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://127.0.0.1:27017/gimnasio');
 
-mongoose.connection.on('open', () => {
-    console.log("Se ha conectado");
-});
+// mongoose.connection.on('open', () => {
+//     console.log("Se ha conectado");
+// });
 
+const conectarBaseDeDatos = require('./db');
 const MembresiaController = require('./controllers/membresiaController');
+
+conectarBaseDeDatos();
 
 // Datos de prueba
 // const datosNuevaMembresia = {
