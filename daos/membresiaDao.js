@@ -12,7 +12,7 @@ class MembresiaDao {
 
   async buscarMembresiaPorId(id) {
     try {
-      const membresia = await Membresia.findById(id);
+      const membresia = await Membresia.findOne({ id: id });
       if (membresia) {
         console.log('Membresía encontrada:', membresia);
       } else {
@@ -26,7 +26,7 @@ class MembresiaDao {
   async actualizarMembresiaPorId(id, nuevosDatos) {
     try {
       const membresiaActualizada = await Membresia.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         nuevosDatos,
         { new: true }
       );
@@ -42,7 +42,7 @@ class MembresiaDao {
 
   async eliminarMembresiaPorId(id) {
     try {
-      const membresiaEliminada = await Membresia.findOneAndDelete({ _id: id });
+      const membresiaEliminada = await Membresia.findOneAndDelete({ id: id });
       if (membresiaEliminada) {
         console.log('Membresía eliminada con éxito:', membresiaEliminada);
       } else {
