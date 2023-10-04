@@ -1,4 +1,4 @@
-const Inventario = require('../models/inventario');
+const {Inventario} = require('../models/inventario');
 
 class InventarioDao {
 
@@ -44,7 +44,7 @@ class InventarioDao {
 
     async eliminarInventarioPorId(id) {
         try {
-            const inventarioEliminado = await Membresia.findOneAndDelete({ id: id });
+            const inventarioEliminado = await Inventario.findOneAndDelete({ id: id });
             if (inventarioEliminado) {
               console.log('Inventario eliminado con éxito:', inventarioEliminado);
             } else {
