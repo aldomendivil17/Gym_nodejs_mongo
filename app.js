@@ -8,8 +8,41 @@
 const conectarBaseDeDatos = require('./db');
 const MembresiaController = require('./controllers/membresiaController');
 const InventarioController = require('./controllers/inventarioController');
+const ClaseController = require('./controllers/claseController');
 
 conectarBaseDeDatos();
+
+
+//DAtos de prueba CLASE 
+const datosNuevaClase = {
+    id: 1,
+    nombre: 'Spinning',
+    horario: 'Lunes 8:00 am',
+    costo: 100,
+    capacidad_maxima: 20,
+    entrenadores: [{
+        nombre: 'Juan',
+        apellido_parterno: 'Perez',
+        apellido_materno: 'Gomez',
+        fecha_nacimiento: new Date(1990, 10, 10),
+        correo_electronico: 'juan@gmail.com',
+        numero_celular: '1234567890'
+    },
+    {
+        nombre: 'Pedro',
+        apellido_parterno: 'Gastelum',
+        apellido_materno: 'Robles',
+        fecha_nacimiento: new Date(1999, 10, 10),
+        correo_electronico: 'pedro@gmail.com',
+        numero_celular: '0987654321'
+    }]
+};
+
+
+// Ejecutar las operaciones CLASE
+// ClaseController.buscarClasePorId("1");
+ClaseController.agregarClase(datosNuevaClase);
+
 
 // // Datos de prueba INVENTARIO (Maquina)
 // const datosNuevoInventarioMaquina = {
