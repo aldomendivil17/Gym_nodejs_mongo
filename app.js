@@ -9,14 +9,32 @@ const conectarBaseDeDatos = require('./db');
 const MembresiaController = require('./controllers/membresiaController');
 const InventarioController = require('./controllers/inventarioController');
 const ClaseController = require('./controllers/claseController');
+const MiembroController = require('./controllers/miembroController');
 
 conectarBaseDeDatos();
 
 
-//DAtos de prueba CLASE 
+// Datos de prueba MIEMBRO
+const datosNuevoMiembro = {
+    nombre: 'Aldo',
+    apellido_parterno: 'Mendivil',
+    apellido_materno: 'Ochoa',
+    fecha_nacimiento: new Date(2002, 8, 17),
+    numero_celular: '1234567890',
+    id_membresia: "6519e39a402b34a8161150cb",
+    clases_inscritas: ["651cfbdf83b265cfcbc9ca1e", "651e1a5d5be614f71d9b5a21"]
+};
+
+// Ejecutar las operaciones MIEMBRO
+// MiembroController.buscarMiembroPorId("651e19bd024e23caf7cf76b4");
+MiembroController.agregarMiembro(datosNuevoMiembro);
+
+
+
+//Datos de prueba CLASE 
 const datosNuevaClase = {
-    id: 1,
-    nombre: 'Spinning',
+    id: 2,
+    nombre: 'Crossfit',
     horario: 'Lunes 8:00 am',
     costo: 100,
     capacidad_maxima: 20,
@@ -41,7 +59,7 @@ const datosNuevaClase = {
 
 // Ejecutar las operaciones CLASE
 // ClaseController.buscarClasePorId("1");
-ClaseController.agregarClase(datosNuevaClase);
+// ClaseController.agregarClase(datosNuevaClase);
 
 
 // // Datos de prueba INVENTARIO (Maquina)
