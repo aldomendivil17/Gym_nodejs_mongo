@@ -1,6 +1,39 @@
 const Membresia = require('../models/membresia');
 
 class MembresiaDao {
+
+  geyAllMembresias = (req, res) => {
+    try {
+      const membresias = Membresia.find({});
+      if (membresias && membresias.length > 0) {
+        return membresias;
+      } else {
+        console.log('No se encontraron membresías.');
+        return [];
+      }
+    }
+    catch (error) {
+      console.error('Error al buscar las membresías:', error);
+      throw error;
+    }
+  }
+
+  async buscarTodasLasMembresias() {
+    try {
+      const membresias = await Membresia.find({});
+      if (membresias && membresias.length > 0) {
+        return membresias;
+      } else {
+        console.log('No se encontraron membresías.');
+        return [];
+      }
+    } catch (error) {
+      console.error('Error al buscar las membresías:', error);
+      throw error;
+    }
+  }
+
+
   async agregarMembresia(nuevaMembresia) {
     try {
       await nuevaMembresia.save();
