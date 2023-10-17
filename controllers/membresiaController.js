@@ -2,6 +2,7 @@ const MembresiaDao = require('../daos/membresiaDao');
 const Membresia = require('../models/membresia');
 
 class MembresiaController {
+
   async agregarMembresia(datosMembresia) {
     const nuevaMembresia = new Membresia(datosMembresia);
 

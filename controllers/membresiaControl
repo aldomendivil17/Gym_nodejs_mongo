@@ -1,0 +1,35 @@
+const fs = require('fs');
+const Membresia = require('../models/membresia');
+const dataPath = './data/membresia.json';
+
+// Funciones del controlador
+exports.getAllMembresias = async (req, res) => {
+  try {
+    const membresiaData = await Membresia.find({});
+    res.json(membresiaData);
+  } catch (err) {
+    res.status(500).json({ error: 'No se pudieron obtener las membresías' });
+  }
+};
+
+exports.getMembresiaById = async (req, res) => {
+  const membresiaId = parseInt(req.params.id);
+
+  if (isNaN(membresiaId)) {
+    return res.status(400).json({ error: 'ID de membresía no válido' });
+  }
+
+  try {
+    const membresia = await Membresia.findOne({ id: membresiaId });
+
+    if (!membresia) {
+      return res.status(404).json({ error: 'Membresia no encontrada' });
+    }
+
+    res.json(membresia);
+  } catch (err) {
+    res.status(500).json({ error: 'No se pudo obtener la membresía' });
+  }
+};
+
+

@@ -13,48 +13,78 @@ const MiembroController = require('./controllers/miembroController');
 
 conectarBaseDeDatos();
 
+// Prueba router membresia
+const express = require('express');
+const app = express();
+
+// Middleware para analizar JSON
+app.use(express.json());
+
+// Middleware de rutas para las membresías
+const membresiaRoutes = require('./routes/membresia');
+app.use('/gym', membresiaRoutes);
+
+// Middleware de errores
+const errorHandler = require('./middlewares/errorHandler');
+app.use(errorHandler);
+
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor en ejecución en el puerto ${PORT}`);
+});
+
+
+
+
+
+
+
+
+
+
 
 // Datos de prueba MIEMBRO
-const datosNuevoMiembro = {
-    nombre: 'Aldo',
-    apellido_parterno: 'Mendivil',
-    apellido_materno: 'Ochoa',
-    fecha_nacimiento: new Date(2002, 8, 17),
-    numero_celular: '1234567890',
-    id_membresia: "6519e39a402b34a8161150cb",
-    clases_inscritas: ["651cfbdf83b265cfcbc9ca1e", "651e1a5d5be614f71d9b5a21"]
-};
+// const datosNuevoMiembro = {
+//     nombre: 'Aldo',
+//     apellido_parterno: 'Mendivil',
+//     apellido_materno: 'Ochoa',
+//     fecha_nacimiento: new Date(2002, 8, 17),
+//     numero_celular: '1234567890',
+//     id_membresia: "6519e39a402b34a8161150cb",
+//     clases_inscritas: ["651cfbdf83b265cfcbc9ca1e", "651e1a5d5be614f71d9b5a21"]
+// };
 
 // Ejecutar las operaciones MIEMBRO
 // MiembroController.buscarMiembroPorId("651e19bd024e23caf7cf76b4");
-MiembroController.agregarMiembro(datosNuevoMiembro);
+// MiembroController.agregarMiembro(datosNuevoMiembro);
 
 
 
 //Datos de prueba CLASE 
-const datosNuevaClase = {
-    id: 2,
-    nombre: 'Crossfit',
-    horario: 'Lunes 8:00 am',
-    costo: 100,
-    capacidad_maxima: 20,
-    entrenadores: [{
-        nombre: 'Juan',
-        apellido_parterno: 'Perez',
-        apellido_materno: 'Gomez',
-        fecha_nacimiento: new Date(1990, 10, 10),
-        correo_electronico: 'juan@gmail.com',
-        numero_celular: '1234567890'
-    },
-    {
-        nombre: 'Pedro',
-        apellido_parterno: 'Gastelum',
-        apellido_materno: 'Robles',
-        fecha_nacimiento: new Date(1999, 10, 10),
-        correo_electronico: 'pedro@gmail.com',
-        numero_celular: '0987654321'
-    }]
-};
+// const datosNuevaClase = {
+//     id: 2,
+//     nombre: 'Crossfit',
+//     horario: 'Lunes 8:00 am',
+//     costo: 100,
+//     capacidad_maxima: 20,
+//     entrenadores: [{
+//         nombre: 'Juan',
+//         apellido_parterno: 'Perez',
+//         apellido_materno: 'Gomez',
+//         fecha_nacimiento: new Date(1990, 10, 10),
+//         correo_electronico: 'juan@gmail.com',
+//         numero_celular: '1234567890'
+//     },
+//     {
+//         nombre: 'Pedro',
+//         apellido_parterno: 'Gastelum',
+//         apellido_materno: 'Robles',
+//         fecha_nacimiento: new Date(1999, 10, 10),
+//         correo_electronico: 'pedro@gmail.com',
+//         numero_celular: '0987654321'
+//     }]
+// };
 
 
 // Ejecutar las operaciones CLASE
