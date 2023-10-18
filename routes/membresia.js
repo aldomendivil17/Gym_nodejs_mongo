@@ -6,7 +6,7 @@ const membresiaControl = require('../controllers/membresiaControl');
 router.get('/membresia', membresiaControl.getAllMembresias);
 router.post('/membresia', membresiaControl.addMembresia);
 router.get('/membresia/:id', membresiaControl.getMembresiaById);
-// router.put('/membresia/:id', membresiaController.updateMembresia);
-// router.delete('/membresia/:id', membresiaController.deleteMembresia);
+router.put('/membresia/:id', membresiaControl.updateMembresia);
+router.delete('/membresia/:id', membresiaControl.deleteMembresia);
 
 module.exports = router;

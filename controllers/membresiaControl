@@ -13,11 +13,7 @@ exports.getAllMembresias = async (req, res) => {
 };
 
 exports.getMembresiaById = async (req, res) => {
-  const membresiaId = parseInt(req.params.id);
-
-  if (isNaN(membresiaId)) {
-    return res.status(400).json({ error: 'ID de membresía no válido' });
-  }
+  const membresiaId = req.params.id;
 
   try {
     const membresia = await Membresia.findOne({_id: membresiaId });
@@ -47,5 +43,35 @@ exports.addMembresia = async (req, res) => {
     res.status(500).json({ error: 'No se pudo agregar la membresía' });
   }
 };
+
+exports.updateMembresia = async (req, res) => {
+  const membresiaId = req.params.id;
+  
+  try {
+    const filter = { _id: membresiaId };
+    const update = {
+      $set: req.body,
+    };
+
+    await Membresia.updateOne(filter, update);
+
+    res.json({ message: 'Membresía actualizada exitosamente' });
+
+  } catch (err) {
+    res.status(500).json({ error: 'No se pudo actualizar la membresía' });
+  }
+};
+
+exports.deleteMembresia = async (req, res) => {
+  const membresiaId = req.params.id;
+
+  try {
+    await Membresia.deleteOne({ _id: membresiaId });
+
+    res.json({ message: 'Membresía eliminada exitosamente' });
+  } catch (err) {
+    res.status(500).json({ error: 'No se pudo eliminar la membresía' });
+  }
+}
 
 
