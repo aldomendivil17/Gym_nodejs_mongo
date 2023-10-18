@@ -1,11 +1,12 @@
 const fs = require('fs');
 const Membresia = require('../models/membresia');
 const dataPath = './data/membresia.json';
+const MembresiaDAO = require('../daos/membresiaDao');
 
 // Funciones del controlador
 exports.getAllMembresias = async (req, res) => {
   try {
-    const membresiaData = await Membresia.find({});
+    const membresiaData = await MembresiaDAO.findAllMembresias();
     res.json(membresiaData);
   } catch (err) {
     res.status(500).json({ error: 'No se pudieron obtener las membresías' });

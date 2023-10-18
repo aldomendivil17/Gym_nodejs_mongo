@@ -1,6 +1,11 @@
 const Membresia = require('../models/membresia');
 
 class MembresiaDao {
+  async findAllMembresias() {
+    return await Membresia.find({});
+  }
+
+
   async buscarTodasLasMembresias() {
     try {
       const membresias = await Membresia.find({});
