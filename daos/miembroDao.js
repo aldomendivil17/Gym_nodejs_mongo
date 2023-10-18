@@ -22,7 +22,7 @@ class MiembroDao {
             console.error('Error al buscar el miembro:', error);
         }
     }
-
+//  trwe
     async actualizarMiembroPorId(id, nuevosDatos) {
         try {
             const miembroActualizado = await Miembro.findOneAndUpdate(
