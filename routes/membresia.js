@@ -10,3 +10,5 @@ router.put('/membresia/:id', membresiaControl.updateMembresia);
 router.delete('/membresia/:id', membresiaControl.deleteMembresia);
 
 module.exports = router;
+
+//probando
