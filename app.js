@@ -1,15 +1,4 @@
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://127.0.0.1:27017/gimnasio');
-
-// mongoose.connection.on('open', () => {
-//     console.log("Se ha conectado");
-// });
-
 const conectarBaseDeDatos = require('./db');
-const MembresiaControl = require('./controllers/membresiaControl');
-const InventarioController = require('./controllers/inventarioController');
-const ClaseController = require('./controllers/claseController');
-const MiembroControl = require('./controllers/miembroControl');
 
 conectarBaseDeDatos();
 
