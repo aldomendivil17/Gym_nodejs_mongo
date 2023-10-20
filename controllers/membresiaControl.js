@@ -27,7 +27,7 @@ exports.getMembresiaById = async (req, res) => {
   }
 };
 
-exports.addMembresia = async (req, res) => {
+exports.addMembresia = async (req, res, next) => {
   try {
     const datosNuevaMembresia = new Membresia({
       tipo: req.body.tipo,
@@ -35,11 +35,17 @@ exports.addMembresia = async (req, res) => {
       fecha_renovacion: req.body.fecha_renovacion,
     });
 
+    const validationError = datosNuevaMembresia.validateSync();
+
+    if (validationError) {
+      // Si la validación falla, lanza un error personalizado con los detalles.
+      throw new Error(`Información incompleta: ${validationError.message}`);
+    }
     await MembresiaDAO.addMembresia(datosNuevaMembresia);
 
     res.json(datosNuevaMembresia);
   } catch (err) {
-    res.status(500).json({ error: 'No se pudo agregar la membresía' });
+    next(err);
   }
 };
 
