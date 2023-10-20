@@ -6,10 +6,10 @@
 // });
 
 const conectarBaseDeDatos = require('./db');
-const MembresiaController = require('./controllers/membresiaController');
+const MembresiaControl = require('./controllers/membresiaControl');
 const InventarioController = require('./controllers/inventarioController');
 const ClaseController = require('./controllers/claseController');
-const MiembroController = require('./controllers/miembroController');
+const MiembroControl = require('./controllers/miembroControl');
 
 conectarBaseDeDatos();
 
@@ -23,6 +23,10 @@ app.use(express.json());
 // Middleware de rutas para las membresías
 const membresiaRoutes = require('./routes/membresia');
 app.use('/gym', membresiaRoutes);
+
+// Middleware de rutas para los miembros
+const miembroRoutes = require('./routes/miembro');
+app.use('/gym', miembroRoutes);
 
 // Middleware de errores
 const errorHandler = require('./middlewares/errorHandler');
