@@ -1,57 +1,27 @@
 const Miembro = require('../models/miembro');
 
 class MiembroDao {
-    async agregarMiembro(nuevoMiembro) {
-        try {
-            await nuevoMiembro.save();
-            console.log('Miembro guardado con éxito');
-        } catch (error) {
-            console.error('Error al guardar el miembro:', error);
-        }
+    
+    async findAllMiembros() {
+        return await Miembro.find({});
     }
 
-    async buscarMiembroPorId(id) {
-        try {
-            const miembro = await Miembro.findOne({ _id: id });
-            if (miembro) {
-                console.log('Miembro encontrado:', miembro);
-            } else {
-                console.log('Miembro no encontrado');
-            }
-        } catch (error) {
-            console.error('Error al buscar el miembro:', error);
-        }
-    }
-//  trwe
-    async actualizarMiembroPorId(id, nuevosDatos) {
-        try {
-            const miembroActualizado = await Miembro.findOneAndUpdate(
-                { _id: id },
-                nuevosDatos,
-                { new: true }
-            );
-            if (miembroActualizado) {
-                console.log('Miembro actualizado con éxito:', miembroActualizado);
-            } else {
-                console.log('Miembro no encontrado');
-            }
-        } catch (error) {
-            console.error('Error al actualizar el miembro:', error);
-        }
+    async findMiembroById(id) {
+        return await Miembro.findOne({ _id: id });
     }
 
-    async eliminarMiembroPorId(id) {
-        try {
-            const miembroEliminado = await Miembro.findOneAndDelete({ _id: id });
-            if (miembroEliminado) {
-                console.log('Miembro eliminado con éxito:', miembroEliminado);
-            } else {
-                console.log('Miembro no encontrado');
-            }
-        } catch (error) {
-            console.error('Error al eliminar el miembro:', error);
-        }
+    async addMiembro(miembro) {
+        await miembro.save();
     }
+
+    async updateMiembro(filter, update) {
+        await Miembro.updateOne(filter, update);
+    }
+
+    async deleteMiembroById(id) {
+        await  Miembro.deleteOne({ _id: id });
+    }
+
 }
 
 module.exports = new MiembroDao();
