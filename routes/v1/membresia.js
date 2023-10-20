@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const membresiaControl = require('../controllers/membresiaControl');
+const membresiaControl = require('../../controllers/membresiaControl');
 
 // Rutas
 router.get('/membresia', membresiaControl.getAllMembresias);

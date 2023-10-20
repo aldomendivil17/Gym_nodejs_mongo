@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const miembroControl = require('../controllers/miembroControl');
+const miembroControl = require('../../controllers/miembroControl');
 
 // Rutas
 router.get('/miembro', miembroControl.getAllMiembros);

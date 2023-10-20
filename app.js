@@ -20,13 +20,11 @@ const app = express();
 // Middleware para analizar JSON
 app.use(express.json());
 
-// Middleware de rutas para las membresías
-const membresiaRoutes = require('./routes/membresia');
-app.use('/gym', membresiaRoutes);
-
-// Middleware de rutas para los miembros
-const miembroRoutes = require('./routes/miembro');
-app.use('/gym', miembroRoutes);
+// rutas para version 1
+const membresiaRoutes = require('./routes/v1/membresia');
+app.use('/api/v1', membresiaRoutes);
+const miembroRoutes = require('./routes/v1/miembro');
+app.use('/api/v1', miembroRoutes);
 
 // Middleware de errores
 const errorHandler = require('./middlewares/errorHandler');
