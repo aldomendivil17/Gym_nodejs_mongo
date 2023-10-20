@@ -43,7 +43,7 @@ exports.addMembresia = async (req, res, next) => {
     }
     await MembresiaDAO.addMembresia(datosNuevaMembresia);
 
-    res.json(datosNuevaMembresia);
+    res.status(201).json(datosNuevaMembresia);
   } catch (err) {
     next(err);
   }
