@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 
 const membresiaSchema = new mongoose.Schema({
-    tipo: String,
-    costo: Number,
-    fecha_renovacion: Date
+    tipo: {
+        type: String,
+        required: true,
+    },
+    costo: {
+        type: Number,
+        required: true,
+    },
+    fecha_renovacion: {
+        type: Date,
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('Membresia', membresiaSchema); 

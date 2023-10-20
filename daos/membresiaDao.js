@@ -11,6 +11,7 @@ class MembresiaDao {
 
   async addMembresia(membresia) {
     await membresia.save();
+    console.log('Membresia agregada exitosamente');
   }
 
   async updateMembresia(filter, update) {

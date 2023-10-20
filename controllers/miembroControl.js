@@ -1,3 +1,4 @@
+const Miembro = require('../models/miembro');
 const MiembroDAO = require('../daos/miembroDao');
 
 // Funciones del controlador

@@ -1,3 +1,4 @@
+const Membresia = require('../models/membresia');
 const MembresiaDAO = require('../daos/membresiaDao');
 
 // Funciones del controlador
@@ -44,7 +45,7 @@ exports.addMembresia = async (req, res) => {
 
 exports.updateMembresia = async (req, res) => {
   const membresiaId = req.params.id;
-  
+
   try {
     const filter = { _id: membresiaId };
     const update = {
