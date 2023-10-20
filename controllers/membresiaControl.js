@@ -1,4 +1,3 @@
-const fs = require('fs');
 const MembresiaDAO = require('../daos/membresiaDao');
 
 // Funciones del controlador
