@@ -5,7 +5,7 @@ const MembresiaDAO = require('../daos/membresiaDao');
 exports.getAllMembresias = async (req, res) => {
   try {
     const membresiaData = await MembresiaDAO.findAllMembresias();
-    res.json(membresiaData);
+    res.status(200).json(membresiaData);
   } catch (err) {
     res.status(500).json({ error: 'No se pudieron obtener las membresías' });
   }
@@ -21,7 +21,7 @@ exports.getMembresiaById = async (req, res) => {
       return res.status(404).json({ error: 'Membresia no encontrada' });
     }
 
-    res.json(membresia);
+    res.status(200).json(membresia);
   } catch (err) {
     res.status(500).json({ error: 'No se pudo obtener la membresía' });
   }
@@ -38,7 +38,6 @@ exports.addMembresia = async (req, res, next) => {
     const validationError = datosNuevaMembresia.validateSync();
 
     if (validationError) {
-      // Si la validación falla, lanza un error personalizado con los detalles.
       throw new Error(`Información incompleta: ${validationError.message}`);
     }
     await MembresiaDAO.addMembresia(datosNuevaMembresia);
@@ -49,7 +48,7 @@ exports.addMembresia = async (req, res, next) => {
   }
 };
 
-exports.updateMembresia = async (req, res) => {
+exports.updateMembresia = async (req, res, next) => {
   const membresiaId = req.params.id;
 
   try {
@@ -58,12 +57,16 @@ exports.updateMembresia = async (req, res) => {
       $set: req.body,
     };
 
+    if (Object.keys(update.$set).length === 0) {
+      throw new Error("No se especificaron campos a actualizar");
+    }
+
     await MembresiaDAO.updateMembresia(filter, update);
 
-    res.json({ message: 'Membresía actualizada exitosamente' });
+    res.status(200).json({ message: 'Membresía actualizada exitosamente' });
 
   } catch (err) {
-    res.status(500).json({ error: 'No se pudo actualizar la membresía' });
+    next(err);
   }
 };
 
