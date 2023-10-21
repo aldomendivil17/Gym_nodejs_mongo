@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const conectarBaseDeDatos = require('./db');
 
 conectarBaseDeDatos();
@@ -15,12 +18,23 @@ app.use('/api/v1', membresiaRoutes);
 const miembroRoutes = require('./routes/v1/miembro');
 app.use('/api/v1', miembroRoutes);
 
+
+
+// Middleware de rutas para la autenticación
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
+
+// Middleware de rutas protegidas
+const protectedRoutes = require('./routes/protected');
+app.use('/protegido', protectedRoutes);
+
+
 // Middleware de errores
 const errorHandler = require('./middlewares/errorHandler');
 app.use(errorHandler);
 
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
