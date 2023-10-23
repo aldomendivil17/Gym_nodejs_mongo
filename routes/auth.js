@@ -1,6 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const Administrador = require('../models/administrador');
 
 // Cargar la clave secreta desde las variables de entorno
 const secretKey = process.env.SECRET_KEY;
@@ -16,6 +18,7 @@ router.post('/registro', async (req, res) => {
     const { usuario, contraseña } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(contraseña, 10);
+        console.log(hashedPassword);
         const nuevoAdministrador = new Administrador({ usuario, contraseña: hashedPassword });
         await nuevoAdministrador.save();
         res.json({ mensaje: 'Administrador registrado con éxito' });
