@@ -30,22 +30,31 @@ router.post('/registro', async (req, res) => {
 
 
 // Ruta para autenticar y obtener un token JWT
-router.post('/login', (req, res) => {
-    const { username, password } = req.body;
+router.post('/login', async (req, res) => {
+    const { usuario, contraseña } = req.body;
+     try {
+        const administrador = await Administrador.findOne({ usuario });
+        if (!administrador) {
+            res.status(401).json({ mensaje: 'Nombre de usuario o contraseña incorrectos' });
+            return;
+        }
 
-    const user = users.find((u) => u.username === username);
+        const esContraseñaValida = await bcrypt.compare(contraseña, administrador.contraseña);
+        if (!esContraseñaValida) {
+            res.status(401).json({ mensaje: 'Nombre de usuario o contraseña incorrectos' });
+            return;
+        }
 
-    if (!user || user.password !== password) {
-        return res.status(401).json({ error: 'Credenciales inválidas' });
-    }
-    // Configura la duración de 1 minutos en segundos
-    const expiresIn = 30; // 60 segundos (1 minutos)
+        const expiresIn = 40; // 60 segundos (1 minutos)
 
-    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn });
+        const token = jwt.sign({ userId: usuario.id }, secretKey, { expiresIn });
 
-    //   const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
-    res.json({ token });
-    console.log(token)
+        res.json({ token });
+        console.log(token)
+
+     } catch (error) {
+         res.status(500).json({ mensaje: 'Error al iniciar sesión' });
+     }
 });
 
 module.exports = router;
