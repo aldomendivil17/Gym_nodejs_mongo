@@ -7,12 +7,6 @@ const Administrador = require('../models/administrador');
 // Cargar la clave secreta desde las variables de entorno
 const secretKey = process.env.SECRET_KEY;
 
-// Usuarios de ejemplo (esto debe almacenarse en una base de datos en una aplicación real)
-const users = [
-    { id: 1, username: 'user1', password: 'pass1' },
-    { id: 2, username: 'user2', password: 'pass2' },
-];
-
 // Ruta para registrar un nuevo usuario
 router.post('/registro', async (req, res) => {
     const { usuario, contraseña } = req.body;
@@ -26,7 +20,6 @@ router.post('/registro', async (req, res) => {
         res.status(500).json({ mensaje: 'Error al registrar el administrador' });
     }
 });
-
 
 
 // Ruta para autenticar y obtener un token JWT
