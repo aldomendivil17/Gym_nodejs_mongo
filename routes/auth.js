@@ -11,6 +11,21 @@ const users = [
     { id: 2, username: 'user2', password: 'pass2' },
 ];
 
+// Ruta para registrar un nuevo usuario
+router.post('/registro', async (req, res) => {
+    const { usuario, contraseña } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(contraseña, 10);
+        const nuevoAdministrador = new Administrador({ usuario, contraseña: hashedPassword });
+        await nuevoAdministrador.save();
+        res.json({ mensaje: 'Administrador registrado con éxito' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al registrar el administrador' });
+    }
+});
+
+
+
 // Ruta para autenticar y obtener un token JWT
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
