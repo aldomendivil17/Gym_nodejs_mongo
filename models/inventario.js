@@ -2,24 +2,51 @@ const mongoose = require('mongoose');
 
 
 const inventarioSchema = new mongoose.Schema({
-    id: Number,
-    tipo: String,
-    nombre: String,
-    marca: String,
-    costo: Number,
-    cantidad: Number
+    tipo: {
+        type: String,
+        required: true,
+    },
+    nombre: {
+        type: String,
+        required: true,
+    },
+    marca: {
+        type: String,
+        required: true,
+    },
+    costo: {
+        type: Number,
+        required: true,
+    },
+    cantidad: {
+        type: Number,
+        required: true,
+    },
 });
 
 
 const maquinaInventarioSchema = new mongoose.Schema({
-    modelo: String,
-    fecha_adquisicion: Date
+    modelo: {
+        type: String,
+        required: true,
+    },
+    fecha_adquisicion: {
+        type: Date,
+        required: true,
+    },
 });
   
   const productoInventarioSchema = new mongoose.Schema({
-    categoria: String,
-    contenido: String,
-    precio_venta: Number
+    categoria: {
+        type: String,
+    },
+    contenido: {
+        type: String,
+    },
+    precio_venta: {
+        type: Number,
+        required: true,
+    },
 });
 
 
@@ -33,3 +60,4 @@ module.exports = {
     MaquinaInventario,
     ProductoInventario,
 };
+

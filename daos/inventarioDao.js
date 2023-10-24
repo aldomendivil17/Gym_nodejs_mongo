@@ -1,61 +1,27 @@
-const {Inventario} = require('../models/inventario');
+const Inventario = require('../models/inventario');
 
 class InventarioDao {
-
-    async agregarInventario(nuevoInventario) {
-        try{
-            await nuevoInventario.save();
-            console.log('Inventario guardado con éxito');
-        } catch  (error) {
-            console.error('Error al guardar el inventario:', error);
-        }
+    
+    async findAllInventarios() {
+        return await Inventario.find({});
     }
 
-    async buscarInventarioPorId(id) {
-        try {
-            const inventario = await Inventario.findOne({id: id});
-            if(inventario) {
-                console.log('Inventario encontrado:', inventario);
-            } else {
-                console.log('Inventario no encontrado');
-            }
-        } catch (error) {
-            console.error('Error al buscar el inventario:', error);
-        }
+    async findInventarioById(id) {
+        return await Inventario.findOne({ _id: id });
     }
 
-    async actualizarInventarioPorId(id, nuevosDatos) {
-        try {
-            const inventarioActualizado = await Inventario.findByIdAndUpdate(
-                { id: id },
-                nuevosDatos,
-                { new: true }
-            );
-            if (inventarioActualizado) {
-              console.log('Inventario actualizado con éxito:', inventarioActualizado);
-            } else {
-              console.log('Inventario no encontrado');
-            }
-          } catch (error) {
-            console.error('Error al actualizar el inventario:', error);
-          }
-        
+    async addInventario(inventario) {
+        await inventario.save();
     }
 
-    async eliminarInventarioPorId(id) {
-        try {
-            const inventarioEliminado = await Inventario.findOneAndDelete({ id: id });
-            if (inventarioEliminado) {
-              console.log('Inventario eliminado con éxito:', inventarioEliminado);
-            } else {
-              console.log('Inventario no encontrado');
-            }
-          } catch (error) {
-            console.error('Error al eliminar el inventario:', error);
-          }
-        
+    async updateInventario(filter, update) {
+        await Inventario.updateOne(filter, update);
     }
+
+    async deleteInventarioById(id) {
+        await  Inventario.deleteOne({ _id: id });
+    }
+
 }
-
 
 module.exports = new InventarioDao();

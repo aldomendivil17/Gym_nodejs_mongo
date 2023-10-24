@@ -1,47 +1,84 @@
-const InventarioDao = require('../daos/inventarioDao');
-const {Inventario, MaquinaInventario, ProductoInventario} = require('../models/inventario');
+const Inventario = require('../models/inventario');
+const InventarioDAO = require('../daos/inventarioDao');
 
-class InventarioController {
-    async agregarMaquina(datosInventario) {
-        const nuevoInventario = new MaquinaInventario(datosInventario);
+// Funciones del controlador
 
-        try {
-            await InventarioDao.agregarInventario(nuevoInventario);
-        } catch (error) {
-            console.error('Error al guardar el inventario:', error);
-        }
+exports.getAllInventarios = async (req, res) => {
+    try {
+        const inventarioData = await InventarioDAO.findAllInventarios();
+        res.json(inventarioData);
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudieron obtener los inventarios' });
     }
+};
 
-    async agregarProducto(datosInventario) {
-        const nuevoInventario = new ProductoInventario(datosInventario);
+exports.getInventarioById = async (req, res) => {
+    const inventarioId = req.params.id;
 
-        try {
-            await InventarioDao.agregarInventario(nuevoInventario);
-        } catch (error) {
-            console.error('Error al guardar el inventario:', error);
+    try {
+        const inventario = await InventarioDAO.findInventarioById(inventarioId);
+
+        if (!inventario) {
+            return res.status(404).json({ error: 'Inventario no encontrado' });
         }
+
+        res.json(inventario);
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudo obtener el inventario' });
     }
+};
 
+exports.addInventario = async (req, res, next) => {
+    try {
+        const datosNuevoInventario = new Inventario({
+            tipo: req.body.tipo,
+            nombre: req.body.nombre,
+            marca: req.body.marca,
+            costo: req.body.costo,
+            cantidad: req.body.cantidad
+        });
 
-    async buscarInventarioPorId(id) {
-        await InventarioDao.buscarInventarioPorId(id);
-    }
+        const validationError = datosNuevoInventario.validateSync();
 
-    async actualizarInventarioPorId(id, nuevosDatos) {
-        try {
-            await InventarioDao.actualizarInventarioPorId(id, nuevosDatos);
-        } catch (error) {
-            console.error('Error al actualizar el inventario:', error);
+        if (validationError) {
+            throw new Error(`Información incompleta: ${validationError.message}`);
         }
-    }
 
-    async eliminarInventarioPorId(id) {
-        try {
-            await InventarioDao.eliminarInventarioPorId(id);
-        } catch (error) {
-            console.error('Error al eliminar el inventario:', error);
-        }
+        await InventarioDAO.addInventario(datosNuevoInventario);
+
+        res.status(201).json(datosNuevoInventario);
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.updateInventario = async (req, res) => {
+    const inventarioId = req.params.id;
+
+    try {
+        const filter = { _id: inventarioId };
+        const update = {
+            $set: req.body,
+        };
+
+        await InventarioDAO.updateInventario(filter, update);
+
+        res.json({ message: 'Inventario actualizado exitosamente' });
+
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudo actualizar el Inventario' });
+    }
+};
+
+exports.deleteInventario = async (req, res) => {
+    const inventarioId = req.params.id;
+
+    try {
+
+        await InventarioDAO.deleteInventarioById(inventarioId);
+
+        res.json({ message: 'Inventario eliminado exitosamente' });
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudo eliminar el Inventario' });
     }
 }
-
-module.exports = new InventarioController();
