@@ -5,6 +5,8 @@ module.exports = (err, req, res, next) => {
     res.status(400).json({ error: err.message }); // Respuesta de error 400 Bad Request.
   } else if(err.message === "No se especificaron campos a actualizar") {
     res.status(400).json({ error: err.message });
+  } else if(err.message === "No se puede eliminar la membresía porque hay miembros asociados.") {
+    res.status(400).json({ error: err.message });
   } else {
     res.status(500).json({ error: 'Ha ocurrido un error en el servidor' });
   }

@@ -28,7 +28,7 @@ exports.getMiembroById = async (req, res) => {
     }
 };
 
-exports.addMiembro = async (req, res) => {
+exports.addMiembro = async (req, res, next) => {
     try {
         const datosNuevoMiembro = new Miembro({
             nombre: req.body.nombre,
@@ -40,11 +40,17 @@ exports.addMiembro = async (req, res) => {
             clases_inscritas: req.body.clases_inscritas
         });
 
+        const validationError = datosNuevoMiembro.validateSync();
+
+        if (validationError) {
+            throw new Error(`Información incompleta: ${validationError.message}`);
+        }
+
         await MiembroDAO.addMiembro(datosNuevoMiembro);
 
-        res.json(datosNuevoMiembro);
+        res.status(201).json(datosNuevoMiembro);
     } catch (err) {
-        res.status(500).json({ error: 'No se pudo agregar el miembro' });
+        next(err);
     }
 };
 
