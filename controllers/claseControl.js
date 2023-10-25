@@ -14,21 +14,21 @@ exports.getAllClases = async (req, res) => {
 
 exports.getClaseById = async (req, res) => {
     const claseId = req.params.id;
-  
-    try {
-      const clase = await claseDAO.findClaseById(claseId);
-  
-      if (!clase) {
-        return res.status(404).json({ error: 'Clase no encontrada. ' });
-      }
-  
-      res.status(200).json(clase);
-    } catch (err) {
-      res.status(500).json({ error: 'No se pudo obtener la clase. ' });
-    }
-  };
 
-  exports.addClase = async (req, res) => {
+    try {
+        const clase = await claseDAO.findClaseById(claseId);
+
+        if (!clase) {
+            return res.status(404).json({ error: 'Clase no encontrada. ' });
+        }
+
+        res.status(200).json(clase);
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudo obtener la clase. ' });
+    }
+};
+
+exports.addClase = async (req, res) => {
     try {
         const datosNuevaClase = new Clase({
             id: req.body.id,
@@ -39,15 +39,21 @@ exports.getClaseById = async (req, res) => {
             entrenadores: req.body.entrenadores,
         });
 
+        const validationError = datosNuevaClase.validateSync();
+
+        if (validationError) {
+            throw new Error(`Información incompleta: ${validationError.message}`);
+        }
+
         await ClaseDAO.addClase(datosNuevaClase);
 
         res.json(datosNuevaClase);
     } catch (err) {
-        res.status(500).json({ error: 'No se pudo agregar la clase. ' });
+        next(err);
     }
 };
 
-exports.updateClase= async (req, res) => {
+exports.updateClase = async (req, res) => {
     const claseId = req.params.id;
 
     try {
@@ -56,12 +62,16 @@ exports.updateClase= async (req, res) => {
             $set: req.body,
         };
 
+        if (Object.keys(update.$set).length === 0) {
+            throw new Error("No se especificaron campos a actualizar");
+        }
+
         await ClaseDAO.updateClase(filter, update);
 
         res.json({ message: 'Clase actualizada exitosamente. ' });
 
     } catch (err) {
-        res.status(500).json({ error: 'No se pudo actualizar la clase. ' });
+        next(err);
     }
 };
 
