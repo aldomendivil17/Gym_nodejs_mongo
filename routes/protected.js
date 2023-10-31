@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
+
+dotenv.config();
 
 // Middleware para verificar el token en rutas protegidas
 const verifyToken = (req, res, next) => {
@@ -24,10 +25,4 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// Ruta protegida que requiere un token JWT válido
-router.get('/', verifyToken, (req, res) => {
-  // Ejemplo de respuesta con el ID de usuario del token
-  res.json({ mensaje: 'Esta es una ruta protegida por JWT', usuario: req.userId });
-});
-
-module.exports = router;
+module.exports = verifyToken;

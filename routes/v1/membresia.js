@@ -1,12 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const membresiaControl = require('../../controllers/membresiaControl');
+const verifyToken = require('../protected');
 
-// Rutas
-router.get('/membresia', membresiaControl.getAllMembresias);
-router.post('/membresia', membresiaControl.addMembresia);
-router.get('/membresia/:id', membresiaControl.getMembresiaById);
-router.put('/membresia/:id', membresiaControl.updateMembresia);
-router.delete('/membresia/:id', membresiaControl.deleteMembresia);
+// Rutas protegidas con token JWT válido
+router.get('/membresia', verifyToken, (req, res) => {
+    membresiaControl.getAllMembresias(req, res);
+});
+
+router.post('/membresia', verifyToken, (req, res) => {
+    membresiaControl.addMembresia(req, res);
+});
+
+router.get('/membresia/:id', verifyToken, (req, res) => {
+    membresiaControl.getMembresiaById(req, res);
+});
+
+router.put('/membresia/:id', verifyToken, (req, res) => {
+    membresiaControl.updateMembresia(req, res);
+});
+
+router.delete('/membresia/:id', verifyToken, (req, res) => {
+    membresiaControl.deleteMembresia(req, res);
+});
 
 module.exports = router;
