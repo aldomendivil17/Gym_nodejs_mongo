@@ -2,11 +2,25 @@ const express = require('express');
 const router = express.Router();
 const miembroControl = require('../../controllers/miembroControl');
 
-// Rutas
-router.get('/miembro', miembroControl.getAllMiembros);
-router.post('/miembro', miembroControl.addMiembro);
-router.get('/miembro/:id', miembroControl.getMiembroById);
-router.put('/miembro/:id', miembroControl.updateMiembro);
-router.delete('/miembro/:id', miembroControl.deleteMiembro);
+// Rutas protegidas con token JWT válido
+router.get('/miembro', (req, res) => {
+    miembroControl.getAllMiembros(req, res);
+});
+
+router.post('/miembro', (req, res) => {
+    miembroControl.addMiembro(req, res);
+});
+
+router.get('/miembro/:id', (req, res) => {
+    miembroControl.getMiembroById(req, res);
+});
+
+router.put('/miembro/:id', (req, res) => {
+    miembroControl.updateMiembro(req, res);
+});
+
+router.delete('/miembro/:id', (req, res) => {
+    miembroControl.deleteMiembro(req, res);
+});
 
 module.exports = router;
