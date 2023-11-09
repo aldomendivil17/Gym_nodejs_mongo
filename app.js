@@ -12,11 +12,27 @@ const app = express();
 // Middleware para analizar JSON
 app.use(express.json());
 
-// rutas para version 1
+// Rutas para páginas
+const pages = require('./routes/pages');
+app.use('', pages);
+app.use(express.static('views'));
+
+app.use((req, res, next) => {
+  if (req.path === '/login/') {
+    // Redirigir a la versión sin barra diagonal al final
+    res.redirect(301, '/login');
+  } else {
+    next();
+  }
+});
+
+
+// rutas para API version 1
 const membresiaRoutes = require('./routes/v1/membresia');
 app.use('/api/v1', membresiaRoutes);
 const miembroRoutes = require('./routes/v1/miembro');
 app.use('/api/v1', miembroRoutes);
+
 
 
 

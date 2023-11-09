@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
             return;
         }
 
-        const expiresIn = 40; // 60 segundos (1 minutos)
+        const expiresIn = 60; // 60 segundos (1 minutos)
 
         const token = jwt.sign({ userId: usuario.id }, secretKey, { expiresIn });
 
