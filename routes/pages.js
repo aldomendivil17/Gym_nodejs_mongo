@@ -11,8 +11,9 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/index', verifyToken, (req, res) => {
-    const indexPath = path.join(__dirname, '../views/index.html');
-    res.sendFile(indexPath);
+    const token = req.header('Authorization');
+    console.log("se viene el token")
+    console.log(token)
 });
 
 module.exports = router;

@@ -26,6 +26,15 @@ app.use((req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  if (req.path === '/index.html') {
+    // Redirigir a la versión sin barra diagonal al final
+    res.redirect(301, '/index');
+  } else {
+    next();
+  }
+});
+
 
 // rutas para API version 1
 const membresiaRoutes = require('./routes/v1/membresia');

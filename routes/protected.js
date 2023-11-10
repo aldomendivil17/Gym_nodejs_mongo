@@ -6,10 +6,13 @@ dotenv.config();
 // Middleware para verificar el token en rutas protegidas
 const verifyToken = (req, res, next) => {
   const token = req.header('Authorization');
+  console.log(token )
+  // if (!token) {
+  //   console.log(token)
+  //   return res.status(401).json({ error: 'Token no proporcionado' });
+  //   return res.status(401).redirect('/login');
 
-  if (!token) {
-    return res.status(401).json({ error: 'Token no proporcionado' });
-  }
+  // }
 
   try {
     // Verifica y decodifica el token JWT utilizando la clave secreta
@@ -21,7 +24,8 @@ const verifyToken = (req, res, next) => {
     req.userId = decoded.userId;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Token inválido' });
+    // res.status(401).json({ error: 'Token inválido' });
+    return res.status(401).redirect('/login');
   }
 };
 

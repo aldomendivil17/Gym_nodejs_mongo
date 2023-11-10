@@ -45,7 +45,7 @@
     <!-- Boton para verificar token -->
     <script>
       const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
-
+      console.log('Token JWT en localStorage en INDEX:', localStorage.getItem('token'));
       // Si hay un token almacenado, realiza una solicitud GET a la ruta protegida
       fetch('/index', {
           method: 'GET',

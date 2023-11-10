@@ -97,7 +97,8 @@
                         if (token) {
                             console.log('Usuario autenticado');
                             localStorage.setItem('token', token);
-                            window.location.href = '/index';
+                            console.log('Token JWT en localStorage:', localStorage.getItem('token', token));
+                            window.location.href = 'index.html';
                         } else {
                             alert('Inicio de sesión fallido');
                         }
