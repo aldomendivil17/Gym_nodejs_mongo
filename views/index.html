@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Olimpo | Inicio</title>
+  <link rel="icon" type="image/x-icon" href="../images/LOGO_OLIMPO.png">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -28,7 +29,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src="../images/LOGO_OLIMPO.png" alt="AdminLTELogo" height="60" width="60">
     </div>
 
     <!-- Navbar -->
@@ -67,7 +68,7 @@
         })
         .catch(error => {
           // El token es inválido o ha expirado, puedes redirigir al usuario a la página de inicio de sesión, por ejemplo
-          window.location.href = '/login'; 
+          window.location.href = '/login';
         });
 
 
@@ -110,16 +111,32 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="./index.html" class="nav-link active">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Membresías</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
+
+            <div>
+              <li class="nav-item menu-open">
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="./index.html" class="nav-link active">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Inicio</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-item menu-open">
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="./membresias.html" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Membresías</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </div>
+
+
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -132,16 +149,14 @@
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="font-weight-bold m-4">Inicio</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            
         </div><!-- /.container-fluid -->
-      </div>
+    </div>
       <!-- /.content-header -->
 
       <!-- Main content -->

@@ -8,8 +8,8 @@ router.get('/membresia', verifyToken, (req, res) => {
     membresiaControl.getAllMembresias(req, res);
 });
 
-router.post('/membresia', verifyToken, (req, res) => {
-    membresiaControl.addMembresia(req, res);
+router.post('/membresia', verifyToken, (req, res, next) => {
+    membresiaControl.addMembresia(req, res, next);
 });
 
 router.get('/membresia/:id', verifyToken, (req, res) => {
