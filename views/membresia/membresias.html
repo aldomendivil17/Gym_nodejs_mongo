@@ -116,7 +116,7 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="./index.html" class="nav-link">
+                                        <a href="/index.html" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Inicio</p>
                                         </a>
@@ -162,35 +162,98 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <table id="membresiaTable" class="table table-striped">
-                        <!-- Encabezados de la tabla -->
-                        <thead class="fs-4 fw-bold text-white" style="background: #3f3c3d; text-transform: uppercase;">
-                            <tr>
-                                <th style="text-align: center;">ID</th>
-                                <th style="text-align: center;">Tipo</th>
-                                <th style="text-align: center;">Costo</th>
-                                <th style="text-align: center;">Fecha renovación</th>
-                                <th style="text-align: center;">Acciones</th>
-                            </tr>
-                        </thead>
+                    <div class="bg-white p-2">
+                        <table id="membresiaTable" class="table table-striped">
+                            <!-- <button id="btnEdit">asasas</button> -->
+                            <!-- Encabezados de la tabla -->
+                            <thead class="fs-4 fw-bold text-white"
+                                style="background: #3f3c3d; text-transform: uppercase;">
+                                <tr>
+                                    <th style="text-align: center;">ID</th>
+                                    <th style="text-align: center;">Tipo</th>
+                                    <th style="text-align: center;">Costo</th>
+                                    <th style="text-align: center;">Fecha renovación</th>
+                                    <th style="text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
 
-                        <!-- Cuerpo de la tabla donde se mostrarán las membresías -->
-                        <tbody class="text-center">
-                        </tbody>
-                    </table>
+                            <!-- Cuerpo de la tabla donde se mostrarán las membresías -->
+                            <tbody class="text-center">
+                            </tbody>
+                        </table>
+                    </div>
 
                     <!-- Script para cargar las membresías -->
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <script>
                         const token_bearer = localStorage.getItem('token');
+
+                        // Función para manejar el clic en el botón "Editar"
+                        function handleEditClick() {
+                            // Obtén el ID de la membresía que deseas editar desde la fila
+                            const membresiaId = $(this).closest('tr').find('td:first').text();
+
+                            // Redirige a la página de edición con el ID de la membresía como parámetro
+                            window.location.href = `editarMembresia.html?id=${membresiaId}`;
+                        }
+
+                        // Función para manejar el clic en el botón "Eliminar"
+                        function handleDeleteClick() {
+                            // Obtén el ID de la membresía que deseas eliminar desde la fila
+                            const membresiaId = $(this).closest('tr').find('td:first').text();
+
+                            // Muestra un mensaje de confirmación al usuario
+                            const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta membresía?');
+
+                            if (confirmacion) {
+                                // Realiza la lógica de eliminación, por ejemplo, una solicitud DELETE a la API
+                                eliminarMembresia(membresiaId);
+                            }
+                        }
+
+                        // Función para realizar la eliminación de la membresía mediante una solicitud DELETE a la API
+                        function eliminarMembresia(membresiaId) {
+                            // Aquí puedes agregar la lógica para enviar una solicitud DELETE a la API
+                            // Puedes usar fetch o jQuery.ajax para realizar la solicitud
+
+                            // Ejemplo usando fetch
+                            fetch(`/api/v1/membresia/${membresiaId}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token_bearer}`,
+                                    },
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        // Aquí puedes realizar acciones adicionales después de la eliminación
+                                        console.log('Membresía eliminada con éxito');
+                                        window.location.href = './membresias.html';
+                                    } else {
+                                        throw new Error('Membresia tiene usuarios asociados');
+                                    }
+                                })
+                                .catch(response => {
+                                    console.error(response);
+                                    alert('Membresia tiene usuarios asociados');
+                                    window.location.href = './membresias.html';
+                                });
+                        }
+
+                        // Agrega un manejador de eventos para los botones "Editar" y "Eliminar"
+                        $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
+                        $('#membresiaTable').on('click', '.btnDelete', handleDeleteClick);
+
+
+
                         $(document).ready(function () {
                             // Realizar una solicitud GET a la API para obtener las membresías
                             $.ajax({
-                                url: '/api/v1/membresia', // Ruta de la API
+                                url: '/api/v1/membresia',
                                 type: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token_bearer}`, // Agrega tu token JWT aquí
+                                    'Authorization': `Bearer ${token_bearer}`,
                                 },
                                 success: function (data) {
                                     // Limpiar el cuerpo de la tabla
@@ -212,18 +275,24 @@
                                             '<td>' + membresia.costo + '</td>' +
                                             '<td>' + fechaFormateada + '</td>' +
                                             '<td>' +
-                                            '<button type="button" class="btn btn-outline btn-outline-secondary btn-active-secondary" id="botonDescarga" data-bs-toggle="modal" data-bs-target="#modalD" style="border-radius: 100px; border-width: 2px;">' +
-                                            ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16"> ' +
-                                            '<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>' +
+                                            '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
+                                            ' style="border-radius: 100px; border-width: 2px;">' +
+                                            ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"> ' +
+                                            '<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>' +
                                             '</svg> </button>' +
-                                            '<button type="button" class="btn btn-outline btn-outline-secondary btn-active-secondary ml-3" id="botonDescarga" data-bs-toggle="modal" data-bs-target="#modalD" style="border-radius: 100px; border-width: 2px;">' +
+                                            '<button type="button" class="btn btn-outline btn-outline-secondary btnDelete ml-3" data-bs-toggle="modal" data-bs-target="#modalD" style="border-radius: 100px; border-width: 2px;">' +
                                             ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"> ' +
-                                            '<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>' +
+                                            '<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a.2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>' +
                                             '</svg> </button>' +
                                             '</td>' +
                                             '</tr>';
                                         $('#membresiaTable tbody').append(row);
                                     });
+
+                                    // Agrega un manejador de eventos para los botones "Editar" y "Eliminar" después de cargar las filas
+                                    $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
+                                    $('#membresiaTable').on('click', '.btnDelete',
+                                        handleDeleteClick);
                                 },
                                 error: function (error) {
                                     console.log('Error al cargar las membresías: ' + error);
@@ -231,67 +300,17 @@
                             });
                         });
                     </script>
+                    <script>
+                        document.getElementById('btnEdit').addEventListener('click', function () {
+                            // Redirige a la página "editarMembresia.html"
+                            window.location.href = './editarMembresia.html';
+                        });
+                    </script>
 
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
 
-            <!-- css para modal para agregar -->
-            <!-- <style>
-                .modal {
-                    display: none;
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.5);
-                }
-
-                .modal-content {
-                    background-color: #fff;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    padding: 20px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-                    text-align: center;
-                }
-
-                .close {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    padding: 10px;
-                    cursor: pointer;
-                }
-
-                #membresiaForm {
-                    text-align: left;
-                }
-
-                #membresiaForm label {
-                    display: block;
-                    margin-top: 10px;
-                }
-
-                #membresiaForm input {
-                    width: 30%;
-                    padding: 5px;
-                    margin-top: 5px;
-                }
-
-                #membresiaForm button {
-                    margin-top: 10px;
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 10px 20px;
-                    border: none;
-                    cursor: pointer;
-                }
-            </style> -->
             <!-- Modal para agregar membresía -->
             <div id="modalasasa" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -312,16 +331,50 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="fechaRenovacion">Fecha de Renovación:</label>
-                                    <input type="date" class="form-control" id="fecha_renovacion" name="fecha_renovacion" required>
+                                    <input type="date" class="form-control" id="fecha_renovacion"
+                                        name="fecha_renovacion" required>
                                 </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Agregar</button>
                         </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
+
+            <!-- modal para editar membresia -->
+            <div id="modalEdit" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
+                            <span class="close" id="closeModalBtn">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="membresiaForm">
+                                <div class="form-group">
+                                    <label class="col-form-label">Tipo:</label>
+                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="costo">Costo:</label>
+                                    <input type="number" class="form-control" id="costo" name="costo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
+                                    <input type="date" class="form-control" id="fecha_renovacion"
+                                        name="fecha_renovacion" required>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Agregar</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- script para modal de agregar -->
             <script>
                 const openModalBtn = document.getElementById('openModalBtn');

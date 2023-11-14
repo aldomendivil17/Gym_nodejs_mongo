@@ -70,7 +70,7 @@ exports.updateMembresia = async (req, res, next) => {
   }
 };
 
-exports.deleteMembresia = async (req, res, next) => {
+exports.deleteMembresia = async (req, res) => {
   const membresiaId = req.params.id;
 
   try {
@@ -79,7 +79,7 @@ exports.deleteMembresia = async (req, res, next) => {
 
     res.json({ message: 'Membresía eliminada exitosamente' });
   } catch (err) {
-    next(err);
+    res.status(500).json({ error: 'No se pudo eliminar la membresía' });
   }
 }
 
