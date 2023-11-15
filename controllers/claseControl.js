@@ -14,9 +14,10 @@ exports.getAllClases = async (req, res) => {
 
 exports.getClaseById = async (req, res) => {
     const claseId = req.params.id;
+    console.log("Muestra",claseId);
 
     try {
-        const clase = await claseDAO.findClaseById(claseId);
+        const clase = await ClaseDAO.findClaseById(claseId);
 
         if (!clase) {
             return res.status(404).json({ error: 'Clase no encontrada. ' });
@@ -24,17 +25,17 @@ exports.getClaseById = async (req, res) => {
 
         res.status(200).json(clase);
     } catch (err) {
-        res.status(500).json({ error: 'No se pudo obtener la clase. ' });
+        res.status(500).json({ error: 'No se pudo obtener la clase dcddddd. '+claseId+''});
     }
 };
 
-exports.addClase = async (req, res) => {
+exports.addClase = async (req, res, next) => {
     try {
         const datosNuevaClase = new Clase({
             id: req.body.id,
             nombre: req.body.nombre,
             horario: req.body.horario,
-            costo: req.body.horario,
+            costo: req.body.costo,
             capacidad_maxima: req.body.capacidad_maxima,
             entrenadores: req.body.entrenadores,
         });
@@ -53,7 +54,7 @@ exports.addClase = async (req, res) => {
     }
 };
 
-exports.updateClase = async (req, res) => {
+exports.updateClase = async (req, res, next) => {
     const claseId = req.params.id;
 
     try {
@@ -77,6 +78,7 @@ exports.updateClase = async (req, res) => {
 
 exports.deleteClase = async (req, res) => {
     const claseId = req.params.id;
+    console.log("fsfd",claseId);
 
     try {
 

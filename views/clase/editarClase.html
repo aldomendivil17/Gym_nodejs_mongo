@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Olimpo | Membresías</title>
+    <title>Olimpo | Clases</title>
     <link rel="icon" type="image/x-icon" href="../images/LOGO_OLIMPO.png">
 
     <!-- Google Font: Source Sans Pro -->
@@ -127,7 +127,7 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="./membresias.html" class="nav-link active">
+                                        <a href="./membresia/membresias.html" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Membresías</p>
                                         </a>
@@ -138,7 +138,7 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="/clase/clases.html" class="nav-link">
+                                        <a href="./clases.html" class="nav-link active">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Clases</p>
                                         </a>
@@ -158,10 +158,10 @@
                 // Obtén el ID de la membresía de la URL
                 const currentUrl = new URL(window.location.href);
                 const urlParams = new URLSearchParams(currentUrl.search);
-                const membresiaId = urlParams.get("id");
-                console.log("ID de la membresía a editar:", membresiaId);
+                const claseId = urlParams.get("id");
+                console.log("ID de la clase a editar:", claseId);
                 // Selecciona el elemento <p> por su ID y establece su contenido
-                $("#membresiaIdDisplay").text(membresiaId);
+                $("#claseIdDisplay").text(claseId);
             });
         </script>
         <!-- Content Wrapper. Contains page content -->
@@ -171,9 +171,9 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="d-flex justify-content-between align-items-center m-4">
-                                <h1 class="font-weight-bold ml-4">Membresía:</h1>
+                                <h1 class="font-weight-bold ml-4">Clase:</h1>
                                 <small>
-                                    <h4 class="font-weight mb-0" id="membresiaIdDisplay"></h4>
+                                    <h4 class="font-weight mb-0" id="claseIdDisplay"></h4>
                                 </small>
                             </div>
                         </div>
@@ -185,13 +185,14 @@
             <script>
                 const currentUrl = new URL(window.location.href);
                 const urlParams = new URLSearchParams(currentUrl.search);
-                const membresiaId = urlParams.get("id");
+                const claseId = urlParams.get("id");
 
                 // Variables locales para almacenar datos
-                let tipo, costo, fecha_renovacion;
+                let tipo, fecha_renovacion;
+                let nombre, horario, costo, capacidad_maxima, entrenadores;
 
                 // Realiza la solicitud GET para obtener los datos de la membresía
-                fetch(`/api/v1/membresia/${membresiaId}`, {
+                fetch(`/api/v1/clase/${claseId}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -202,17 +203,34 @@
                         if (response.ok) {
                             return response.json();
                         } else {
-                            throw new Error('Error al obtener datos de la membresía');
+                            throw new Error('Error al obtener datos de la clase');
                         }
                     })
                     .then(data => {
                         // Almacena los datos en las variables locales
-                        tipo = data.tipo;
-                        costo = data.costo;
-                        fecha_renovacion = data.fecha_renovacion;
+                        const nombre = data.nombre;
+                        const horario = data.horario;
+                        const costo = data.costo;
+                        const capacidad_maxima = data.capacidad_maxima;
+                        // Los entrenadores son un array, aquí accedemos al primer entrenador (si existe)
+                        const primerEntrenador = data.entrenadores && data.entrenadores.length > 0 ? data
+                            .entrenadores[0] : null;
+                        
+                        const segundoEntrenador = data.entrenadores && data.entrenadores.length > 1 ? data
+                            .entrenadores[1] : null;
+
+                        console.log("entrenador", primerEntrenador)
+
+                        // Luego, asigna los valores a los inputs
+                        document.getElementById('nombre').value = nombre;
+                        document.getElementById('horario').value = horario;
+                        document.getElementById('costo').value = costo;
+                        document.getElementById('capacidad_maxima').value = capacidad_maxima;
+
+                        const fecha_nacimiento = primerEntrenador.fecha_nacimiento;
 
                         // Crea un objeto Date con la fecha proporcionada
-                        const fecha = new Date(fecha_renovacion);
+                        const fecha = new Date(fecha_nacimiento);
 
                         // Obtiene la diferencia de minutos entre la zona horaria local y la zona horaria del servidor
                         const zonaHorariaDiferencia = fecha.getTimezoneOffset();
@@ -223,14 +241,16 @@
                         // Formatea la fecha como YYYY-MM-DD (puedes ajustar el formato según tus necesidades)
                         const fechaFormateada = fecha.toISOString().split('T')[0];
 
+                        document.getElementById('nombre_entrenador').value = primerEntrenador.nombre;
+                        document.getElementById('apellido_paterno').value = primerEntrenador.apellido_paterno;
+                        document.getElementById('apellido_materno').value = primerEntrenador.apellido_materno;
+                        document.getElementById('fecha_nacimiento').value = fechaFormateada
+                        document.getElementById('correo_electronico').value = primerEntrenador.correo_electronico;
+                        document.getElementById('numero_celular').value = primerEntrenador.numero_celular;
 
-                        // Luego, asigna los valores a los inputs
-                        document.getElementById('tipo').value = tipo;
-                        document.getElementById('costo').value = costo;
-                        document.getElementById('fecha_renovacion').value = fechaFormateada;
                     })
                     .catch(error => {
-                        alert('Error al obtener datos de la membresía');
+                        alert('Error al obtener datos de la clase');
                     });
             </script>
             <!-- Main content -->
@@ -240,8 +260,13 @@
                     <div class="bg-white p-3">
                         <form id="formUpdate">
                             <div class="form-group">
-                                <label class="form-label">Tipo</label>
-                                <input type="text" class="form-control" placeholder="Ingresa el tipo" id="tipo"
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" placeholder="Ingresa el tipo" id="nombre"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Horario</label>
+                                <input type="text" class="form-control" placeholder="Ingresa el costo" id="horario"
                                     required>
                             </div>
                             <div class="form-group">
@@ -250,9 +275,43 @@
                                     required>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Fecha de renovación</label>
-                                <input type="date" class="form-control" placeholder="Ingresa el costo"
-                                    id="fecha_renovacion" required>
+                                <label class="form-label">Capacidad Máxima</label>
+                                <input type="number" class="form-control" placeholder="Ingresa la capacidad máxima"
+                                    id="capacidad_maxima" required>
+                            </div>
+
+
+                            <div class="form-group mt-2">
+                                <hr class="mt-5">
+                                <p class="form-text text-muted d-flex justify-content-center">Entrenador</p>
+                                <label for="nombre_entrenador">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre_entrenador" name="nombre_entrenador"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellido_paterno">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellido_materno">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="correo_electronico">Correo Electronico:</label>
+                                <input type="text" class="form-control" id="correo_electronico"
+                                    name="correo_electronico" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="numero_celular">Número Celular:</label>
+                                <input type="number" class="form-control" id="numero_celular" name="numero_celular"
+                                    required>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -292,21 +351,36 @@
                 event.preventDefault(); // Evita que el formulario se envíe normalmente
 
                 // Obtén los valores actualizados de los inputs
-                const tipo = document.getElementById('tipo').value;
+                const nombre = document.getElementById('nombre').value;
+                const horario = document.getElementById('horario').value;
                 const costo = document.getElementById('costo').value;
-                const fecha_renovacion = document.getElementById('fecha_renovacion').value;
-                const fechaFormateada = convertirFecha(fecha_renovacion);
-                // ... agrega más campos según sea necesario
-
+                const capacidad_maxima = document.getElementById('capacidad_maxima').value;
+                
+                const nombre_entrenador = document.getElementById('nombre_entrenador').value;
+                const apellido_paterno = document.getElementById('apellido_paterno').value;
+                const apellido_materno = document.getElementById('apellido_materno').value;
+                const fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
+                const correo_electronico = document.getElementById('correo_electronico').value;
+                const numero_celular = document.getElementById('numero_celular').value;
+                
                 // Crea un objeto con los datos actualizados
                 const datosActualizados = {
-                    tipo: tipo,
+                    nombre: nombre,
+                    horario: horario,
                     costo: costo,
-                    fecha_renovacion: fechaFormateada
+                    capacidad_maxima: capacidad_maxima,
+                    entrenadores: [{
+                        nombre: nombre_entrenador,
+                        apellido_paterno: apellido_paterno,
+                        apellido_materno: apellido_materno,
+                        fecha_nacimiento: fecha_nacimiento,
+                        correo_electronico: correo_electronico,
+                        numero_celular: numero_celular,
+                    }],     
                 };
 
                 // Realiza la solicitud PUT
-                fetch(`/api/v1/membresia/${membresiaId}`, {
+                fetch(`/api/v1/clase/${claseId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -317,31 +391,18 @@
                     .then(response => {
                         if (response.ok) {
                             // Aquí puedes realizar acciones adicionales después de la actualización
-                            console.log('Membresía actualizada con éxito');
-                            window.location.href = './membresias.html';
+                            console.log('Clase actualizada con éxito');
+                            window.location.href = './clases.html';
                         } else {
-                            throw new Error('Error al actualizar la membresía');
+                            throw new Error('Error al actualizar la clase');
                         }
                     })
                     .catch(error => {
                         console.error(error);
-                        alert('Error al actualizar la membresía');
+                        alert('Error al actualizar la clase');
                     });
             });
         });
-
-        function convertirFecha(fechaString) {
-            // Divide la cadena de fecha en día, mes y año
-            const partesFecha = fechaString.split('/');
-
-            // Crea un objeto Date con el formato aaaa/mm/dd (JavaScript maneja las fechas así)
-            const fecha = new Date(`${partesFecha[2]}-${partesFecha[1]}-${partesFecha[0]}`);
-
-            // Usa toISOString() para obtener la cadena en formato ISO
-            const fechaISO = fecha.toISOString();
-
-            return fechaISO;
-        }
     </script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

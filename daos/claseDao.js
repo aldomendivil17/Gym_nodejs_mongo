@@ -7,11 +7,12 @@ class ClaseDao {
   }
 
   async findClaseById(id) {
-    return await Clase.findOne({ _id: id });
+    return await Clase.findOne({_id: id });
 }
 
 async addClase(clase) {
     await clase.save();
+    console.log('Clase agregada exitosamente');
 }
 
 async updateClase(filter, update) {
@@ -19,7 +20,7 @@ async updateClase(filter, update) {
 }
 
 async deleteClaseById(id) {
-    await  Clase.deleteOne({ _id: id });
+    await  Clase.deleteOne({_id: id });
 }
 }
 

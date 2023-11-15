@@ -8,15 +8,15 @@ router.get('/clase', verifyToken, (req, res) => {
     claseControl.getAllClases(req, res);
 });
 
-router.post('/clase', verifyToken, (req, res) => {
-    claseControl.addClase(req, res);
+router.post('/clase', verifyToken, (req, res, next) => {
+    claseControl.addClase(req, res, next);
 });
 
 router.get('/clase/:id', verifyToken, (req, res) => {
     claseControl.getClaseById(req, res);
 });
 
-router.put('/clase/:id', verifyToken, (req, res) => {
+router.put('/clase/:id', verifyToken, (req, res, next) => {
     claseControl.updateClase(req, res);
 });
 

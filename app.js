@@ -36,12 +36,13 @@ app.use((req, res, next) => {
 });
 
 
-// rutas para API version 1
+// rutas para API version 1 
 const membresiaRoutes = require('./routes/v1/membresia');
 app.use('/api/v1', membresiaRoutes);
 const miembroRoutes = require('./routes/v1/miembro');
 app.use('/api/v1', miembroRoutes);
-
+const claseRoutes = require('./routes/v1/clase');
+app.use('/api/v1', claseRoutes);
 
 
 

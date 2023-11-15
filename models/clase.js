@@ -21,7 +21,7 @@ const entrenadorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  numer_celular: {
+  numero_celular: {
     type: String,
     required: true,
   }
@@ -50,25 +50,5 @@ const claseSchema = new mongoose.Schema({
   },
   entrenadores: [entrenadorSchema]
 });
-
-//middleware para validar antes de eliminar una clase
-claseSchema.pre('deleteOne', async function (next) {
-  console.log('Pre deleteOne middleware');
-  const Class = this.model('Clase');
-  const claseId = this.getQuery()._id; // Obtén el _id correctamente
-
-  // Verificar si existen entrenadores asociados a la clase
-  const tieneEntrenadores = await Class.findOne({ _id: claseId, entrenadores: { $exists: true, $ne: [] } });
-
-  try {
-    if (tieneEntrenadores) {
-      throw new Error('No se puede eliminar la clase, tiene entrenadores asociados.');
-    }
-    next();
-  } catch (err) {
-    next(err);
-  }
-
-});
-
+  
 module.exports = mongoose.model('Clase', claseSchema);

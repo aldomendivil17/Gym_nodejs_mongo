@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Olimpo | Membresías</title>
+    <title>Olimpo | Clases</title>
     <link rel="icon" type="image/x-icon" href="../images/LOGO_OLIMPO.png">
 
     <!-- Google Font: Source Sans Pro -->
@@ -127,7 +127,7 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="./membresias.html" class="nav-link active">
+                                        <a href="/membresia/membresias.html" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Membresías</p>
                                         </a>
@@ -138,7 +138,7 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="/clase/clases.html" class="nav-link">
+                                        <a href="./clases.html" class="nav-link active">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Clases</p>
                                         </a>
@@ -159,7 +159,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="font-weight-bold m-4">Membresías</h1>
+                            <h1 class="font-weight-bold m-4">Clases</h1>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                     <div class="col-sm-12 d-flex justify-content-end align-items-center ">
@@ -174,16 +174,18 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="bg-white p-2">
-                        <table id="membresiaTable" class="table table-striped">
+                        <table id="claseTable" class="table table-striped">
                             <!-- <button id="btnEdit">asasas</button> -->
                             <!-- Encabezados de la tabla -->
                             <thead class="fs-4 fw-bold text-white"
                                 style="background: #3f3c3d; text-transform: uppercase;">
                                 <tr>
                                     <th style="text-align: center;">ID</th>
-                                    <th style="text-align: center;">Tipo</th>
+                                    <th style="text-align: center;">Nombre</th>
+                                    <th style="text-align: center;">Horario</th>
                                     <th style="text-align: center;">Costo</th>
-                                    <th style="text-align: center;">Fecha renovación</th>
+                                    <th style="text-align: center;">Capacidad Máxima</th>
+                                    <th style="text-align: center;">Entrenador</th>
                                     <th style="text-align: center;">Acciones</th>
                                 </tr>
                             </thead>
@@ -202,33 +204,33 @@
                         // Función para manejar el clic en el botón "Editar"
                         function handleEditClick() {
                             // Obtén el ID de la membresía que deseas editar desde la fila
-                            const membresiaId = $(this).closest('tr').find('td:first').text();
+                            const claseId = $(this).closest('tr').find('td:first').text();
 
                             // Redirige a la página de edición con el ID de la membresía como parámetro
-                            window.location.href = `editarMembresia.html?id=${membresiaId}`;
+                            window.location.href = `editarClase.html?id=${claseId}`;
                         }
 
                         // Función para manejar el clic en el botón "Eliminar"
                         function handleDeleteClick() {
                             // Obtén el ID de la membresía que deseas eliminar desde la fila
-                            const membresiaId = $(this).closest('tr').find('td:first').text();
+                            const claseId = $(this).closest('tr').find('td:first').text();
 
                             // Muestra un mensaje de confirmación al usuario
-                            const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta membresía?');
+                            const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta clase?');
 
                             if (confirmacion) {
                                 // Realiza la lógica de eliminación, por ejemplo, una solicitud DELETE a la API
-                                eliminarMembresia(membresiaId);
+                                eliminarClase(claseId);
                             }
                         }
 
                         // Función para realizar la eliminación de la membresía mediante una solicitud DELETE a la API
-                        function eliminarMembresia(membresiaId) {
+                        function eliminarClase(claseId) {
                             // Aquí puedes agregar la lógica para enviar una solicitud DELETE a la API
                             // Puedes usar fetch o jQuery.ajax para realizar la solicitud
 
                             // Ejemplo usando fetch
-                            fetch(`/api/v1/membresia/${membresiaId}`, {
+                            fetch(`/api/v1/clase/${claseId}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -238,29 +240,29 @@
                                 .then(response => {
                                     if (response.ok) {
                                         // Aquí puedes realizar acciones adicionales después de la eliminación
-                                        console.log('Membresía eliminada con éxito');
-                                        window.location.href = './membresias.html';
+                                        console.log('Clase eliminada con éxito');
+                                        window.location.href = './clases.html';
                                     } else {
-                                        throw new Error('Membresia tiene usuarios asociados');
+                                        throw new Error('Error al eliminar la clase');
                                     }
                                 })
                                 .catch(response => {
                                     console.error(response);
-                                    alert('Membresia tiene usuarios asociados');
-                                    window.location.href = './membresias.html';
+                                    alert('Error al eliminar');
+                                    window.location.href = './clases.html';
                                 });
                         }
 
                         // Agrega un manejador de eventos para los botones "Editar" y "Eliminar"
-                        $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
-                        $('#membresiaTable').on('click', '.btnDelete', handleDeleteClick);
+                        $('#claseTable').on('click', '.btnEdit', handleEditClick);
+                        $('#claseTable').on('click', '.btnDelete', handleDeleteClick);
 
 
 
                         $(document).ready(function () {
                             // Realizar una solicitud GET a la API para obtener las membresías
                             $.ajax({
-                                url: '/api/v1/membresia',
+                                url: '/api/v1/clase',
                                 type: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -268,23 +270,27 @@
                                 },
                                 success: function (data) {
                                     // Limpiar el cuerpo de la tabla
-                                    $('#membresiaTable tbody').empty();
+                                    $('#claseTable tbody').empty();
 
                                     // Iterar a través de los datos recibidos y agregar filas a la tabla
-                                    data.forEach(function (membresia) {
-                                        console.log(membresia);
-                                        const fecha = new Date(membresia.fecha_renovacion);
-                                        const fechaFormateada = fecha.toLocaleDateString(
-                                            'es-ES', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                            });
+                                    data.forEach(function (clase) {
+                                        console.log(clase);
+                                        // crea un elemento para mostrar lista de entrenadores
+                                        var entrenadorese = '';
+                                        clase.entrenadores.forEach(function (entrenador) {
+                                            entrenadorese += entrenador.nombre +
+                                                ' ' + entrenador.apellido_paterno +
+                                                ' ' + entrenador.apellido_materno +
+                                                '<br>';
+                                        });
+
                                         var row = '<tr>' +
-                                            '<td>' + membresia._id + '</td>' +
-                                            '<td>' + membresia.tipo + '</td>' +
-                                            '<td>' + membresia.costo + '</td>' +
-                                            '<td>' + fechaFormateada + '</td>' +
+                                            '<td>' + clase._id + '</td>' +
+                                            '<td>' + clase.nombre + '</td>' +
+                                            '<td>' + clase.horario + '</td>' +
+                                            '<td>' + clase.costo + '</td>' +
+                                            '<td>' + clase.capacidad_maxima + '</td>' +
+                                            '<td>' + entrenadorese + '</td>' +
                                             '<td>' +
                                             '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
                                             ' style="border-radius: 100px; border-width: 2px;">' +
@@ -297,24 +303,23 @@
                                             '</svg> </button>' +
                                             '</td>' +
                                             '</tr>';
-                                        $('#membresiaTable tbody').append(row);
+                                        $('#claseTable tbody').append(row);
                                     });
 
                                     // Agrega un manejador de eventos para los botones "Editar" y "Eliminar" después de cargar las filas
-                                    $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
-                                    $('#membresiaTable').on('click', '.btnDelete',
+                                    $('#claseTable').on('click', '.btnEdit', handleEditClick);
+                                    $('#claseTable').on('click', '.btnDelete',
                                         handleDeleteClick);
                                 },
                                 error: function (error) {
-                                    console.log('Error al cargar las membresías: ' + error);
+                                    console.log('Error al cargar las clases: ' + error);
                                 }
                             });
                         });
                     </script>
                     <script>
                         document.getElementById('btnEdit').addEventListener('click', function () {
-                            // Redirige a la página "editarMembresia.html"
-                            window.location.href = './editarMembresia.html';
+                            window.location.href = './editarClase.html';
                         });
                     </script>
 
@@ -322,60 +327,69 @@
             </section>
             <!-- /.content -->
 
-            <!-- Modal para agregar membresía -->
+            <!-- Modal para agregar clase -->
             <div id="modalasasa" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Clase</h5>
                             <span class="close" id="closeModalBtn">&times;</span>
                         </div>
-                        <div class="modal-body">
-                            <form id="membresiaForm">
+                        <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                            <form id="claseForm">
                                 <div class="form-group">
-                                    <label class="col-form-label">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                    <label class="col-form-label" for="nombre">ID:</label>
+                                    <input type="number" class="form-control" id="id" name="id" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="nombre">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="horario">Horario:</label>
+                                    <input type="text" class="form-control" id="horario" name="horario" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="costo">Costo:</label>
                                     <input type="number" class="form-control" id="costo" name="costo" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
-                                    <input type="date" class="form-control" id="fecha_renovacion"
-                                        name="fecha_renovacion" required>
+                                <div class="form-group mb-5">
+                                    <label for="capacidad_maxima">Capacidad Máxima:</label>
+                                    <input type="number" class="form-control" id="capacidad_maxima"
+                                        name="capacidad_maxima" required>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Agregar</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- modal para editar membresia -->
-            <div id="modalEdit" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
-                            <span class="close" id="closeModalBtn">&times;</span>
-                        </div>
-                        <div class="modal-body">
-                            <form id="membresiaForm">
-                                <div class="form-group">
-                                    <label class="col-form-label">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                
+                                <div class="form-group mt-2">
+                                    <hr class="mt-5">
+                                    <p class="form-text text-muted d-flex justify-content-center">Entrenador</p>
+                                    <label for="nombre_entrenador">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre_entrenador"
+                                        name="nombre_entrenador" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="costo">Costo:</label>
-                                    <input type="number" class="form-control" id="costo" name="costo" required>
+                                    <label for="apellido_paterno">Apellido Paterno:</label>
+                                    <input type="text" class="form-control" id="apellido_paterno"
+                                        name="apellido_paterno" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
-                                    <input type="date" class="form-control" id="fecha_renovacion"
-                                        name="fecha_renovacion" required>
+                                    <label for="apellido_materno">Apellido Materno:</label>
+                                    <input type="text" class="form-control" id="apellido_materno"
+                                        name="apellido_materno" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                                    <input type="date" class="form-control" id="fecha_nacimiento"
+                                        name="fecha_nacimiento" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="correo_electronico">Correo Electronico:</label>
+                                    <input type="text" class="form-control" id="correo_electronico"
+                                        name="correo_electronico" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero_celular">Número Celular:</label>
+                                    <input type="number" class="form-control" id="numero_celular"
+                                        name="numero_celular" required>
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -391,7 +405,7 @@
                 const openModalBtn = document.getElementById('openModalBtn');
                 const modal = document.getElementById('modalasasa');
                 const closeModalBtn = document.getElementById('closeModalBtn');
-                const membresiaForm = document.getElementById('membresiaForm');
+                const claseForm = document.getElementById('claseForm');
 
                 openModalBtn.addEventListener('click', () => {
                     modal.style.display = 'block';
@@ -401,43 +415,73 @@
                     modal.style.display = 'none';
                 });
 
-                membresiaForm.addEventListener('submit', (event) => {
+                claseForm.addEventListener('submit', (event) => {
                     event.preventDefault();
 
-                    const tipo = document.getElementById('tipo').value;
+                    const id = document.getElementById('id').value;
+                    const nombre = document.getElementById('nombre').value;
+                    const horario = document.getElementById('horario').value;
                     const costo = document.getElementById('costo').value;
-                    const fechaRenovacion = document.getElementById('fecha_renovacion').value;
+                    const capacidad_maxima = document.getElementById('capacidad_maxima').value;
+                    
+                    // datos del entrenador
+                    const nombre_entrenador = document.getElementById('nombre_entrenador').value;
+                    const apellido_paterno = document.getElementById('apellido_paterno').value;
+                    const apellido_materno = document.getElementById('apellido_materno').value;
+                    const fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
+                    const correo_electronico = document.getElementById('correo_electronico').value;
+                    const numero_celular = document.getElementById('numero_celular').value;
 
+                    const entrenadoresJSON = `[
+                        {
+                            "nombre": "${nombre_entrenador}",
+                            "apellido_paterno": "${apellido_paterno}",
+                            "apellido_materno": "${apellido_materno}",
+                            "fecha_nacimiento": "${fecha_nacimiento}",
+                            "correo_electronico": "${correo_electronico}",
+                            "numero_celular": "${numero_celular}"
+                        }
+                    ]`;
+
+
+                    const entrenadores = JSON.parse(entrenadoresJSON); 
+                    
                     // Aquí puedes realizar alguna acción, como enviar los datos al servidor o mostrarlos en la página.
-                    console.log('Tipo:', tipo);
-                    console.log('Costo:', costo);
-                    console.log('Fecha de Renovación:', fechaRenovacion);
+                    console.log(id);
+                    console.log(nombre);
+                    console.log(horario);
+                    console.log(costo);
+                    console.log(capacidad_maxima);
+                    console.log(entrenadores);
 
                     // Cerrar el modal después de enviar los datos (puedes agregar más lógica aquí).
-                    const nuevaMembresia = {
-                        tipo: tipo,
-                        costo: costo, // Costo de la membresía
-                        fecha_renovacion: fechaRenovacion // Fecha de renovación en formato yyyy-mm-dd
+                    const nuevaClase = {
+                        id: id,
+                        nombre: nombre,
+                        horario: horario,
+                        costo: costo,
+                        capacidad_maxima: capacidad_maxima,
+                        entrenadores: entrenadores,
                     };
 
-                    fetch('/api/v1/membresia', {
+                    fetch('/api/v1/clase', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${token_bearer}`,
                             },
-                            body: JSON.stringify(nuevaMembresia), // Convierte el objeto a JSON
+                            body: JSON.stringify(nuevaClase), // Convierte el objeto a JSON
                         })
                         .then(response => {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                throw new Error('Error al agregar el registro de membresía');
+                                throw new Error('Error al agregar el registro de clase');
                             }
                         })
                         .then(data => {
                             console.log(data);
-                            window.location.href = './membresias.html';
+                            window.location.href = './clases.html';
                             // Registro de membresía agregado con éxito
                         })
                         .catch(error => {
