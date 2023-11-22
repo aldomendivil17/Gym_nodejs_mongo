@@ -35,8 +35,11 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand" style="background-color: #ffea2b;">
       <!-- Left navbar links -->
+      <h1 style="padding-left: 20px;">Olimpo Fitness</h1>
       <ul class="navbar-nav ml-auto">
         <!-- Agrega la clase ml-auto aquí -->
+        <li>
+        </li>
         <li class="nav-item m-2">
           <button class="btn btn-secondary" id="logoutButton">Cerrar Sesión</button>
         </li>
@@ -49,12 +52,12 @@
       console.log('Token JWT en localStorage en INDEX:', localStorage.getItem('token'));
       // Si hay un token almacenado, realiza una solicitud GET a la ruta protegida
       fetch('/index', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Incluye el token en el encabezado
-          }
-        })
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Incluye el token en el encabezado
+        }
+      })
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -137,14 +140,16 @@
 
               <li class="nav-item menu-open">
                 <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="./clase/clases.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Clases</p>
-                        </a>
-                    </li>
+                  <li class="nav-item">
+                    <a href="./clase/clases.html" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Clases</p>
+                    </a>
+                  </li>
                 </ul>
-            </li>
+              </li>
+
+             
             </div>
 
 
@@ -160,41 +165,69 @@
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1 class="font-weight-bold m-4">Inicio</h1>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-            
-        </div><!-- /.container-fluid -->
+          <div class="row">
+            <div class="col-sm-6">
+              <h1 class="font-weight-bold m-4">Inicio</h1>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+          <div class="row" style="padding-left:50px">
+            <div class="col-md-4">
+              <div class="card mt-3" style="height:200px; width:300px">
+                <div class="card-body" style="background-color:#e7e8d3">
+                  <h5 class="card-title">Ingresos</h5>
+                  <p class="card-text">Pagados x Mes: $0</p>
+                  <p class="card-text">Total Miembros: 2</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mt-3" style="height:200px; width:300px">
+                <div class="card-body" style="background-color:#e7e8d3">
+                  <h5 class="card-title">Inscritos este Mes</h5>
+                  <p class="card-text">Total Inscritos: 2</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mt-3" style="height:200px; width:300px">
+                <div class="card-body" style="background-color:#e7e8d3">
+                  <h5 class="card-title">Ingresos este Mes</h5>
+                  <p class="card-text">Total Ingresos: $0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-center mt-5">© 2023 Olimpo Fitness</p>
+        </div>
+      </div><!-- /.container-fluid -->
     </div>
-      <!-- /.content-header -->
+    <!-- /.content-header -->
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
 
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2023 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
     </div>
+  </footer>
 
-
-
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <strong>Copyright &copy; 2023 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
-      </div>
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
 
