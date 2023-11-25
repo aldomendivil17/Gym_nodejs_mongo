@@ -43,7 +43,8 @@ const miembroRoutes = require('./routes/v1/miembro');
 app.use('/api/v1', miembroRoutes);
 const claseRoutes = require('./routes/v1/clase');
 app.use('/api/v1', claseRoutes);
-
+const inventarioRoutes = require('./routes/v1/inventario');
+app.use('/api/v1', inventarioRoutes);
 
 
 // Middleware de rutas para la autenticación

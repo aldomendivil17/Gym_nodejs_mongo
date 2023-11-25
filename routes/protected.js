@@ -22,6 +22,7 @@ const verifyToken = (req, res, next) => {
 
     // Puedes acceder a los datos del token, por ejemplo, el ID de usuario
     req.userId = decoded.userId;
+    console.log("paso por protected correctamente")
     next();
   } catch (error) {
     // res.status(401).json({ error: 'Token inválido' });

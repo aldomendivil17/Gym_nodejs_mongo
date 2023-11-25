@@ -6,9 +6,9 @@ const InventarioDAO = require('../daos/inventarioDao');
 exports.getAllInventarios = async (req, res) => {
     try {
         const inventarioData = await InventarioDAO.findAllInventarios();
-        res.json(inventarioData);
+        res.status(200).json(inventarioData);
     } catch (err) {
-        res.status(500).json({ error: 'No se pudieron obtener los inventarios' });
+        res.status(500).json({ error: 'Nos sedd pudieron obtener los inventarios' });
     }
 };
 
@@ -24,7 +24,7 @@ exports.getInventarioById = async (req, res) => {
 
         res.json(inventario);
     } catch (err) {
-        res.status(500).json({ error: 'No se pudo obtener el inventario' });
+        res.status(500).json({ error: 'No se pudo obteners el inventario' });
     }
 };
 

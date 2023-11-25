@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Olimpo | Miembro</title>
+    <title>Olimpo | Inventario</title>
     <link rel="icon" type="image/x-icon" href="../images/LOGO_OLIMPO.png">
 
     <!-- Google Font: Source Sans Pro -->
@@ -22,27 +22,6 @@
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-    </script>
-
-
-    <!-- ✅ Load CSS file for Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-    <!-- ✅ load jQuery ✅ -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <!-- ✅ load JS for Select2 ✅ -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -170,9 +149,20 @@
                             <li class="nav-item menu-open">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
+                                        <a href="/miembro/miembro.html" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Miembros</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item menu-open">
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
                                         <a href="/miembro/miembro.html" class="nav-link active">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Miembro</p>
+                                            <p>Inventario</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -191,7 +181,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="font-weight-bold m-4">Miembros</h1>
+                            <h1 class="font-weight-bold m-4">Inventario</h1>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                     <div class="col-sm-12 d-flex justify-content-end align-items-center ">
@@ -205,21 +195,19 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <div class="bg-white p-2 ">
-                        <table id="miembroTable" class="table table-striped">
+                    <div class="bg-white p-2">
+                        <table id="inventarioTable" class="table table-striped">
                             <!-- <button id="btnEdit">asasas</button> -->
                             <!-- Encabezados de la tabla -->
                             <thead class="fs-4 fw-bold text-white"
                                 style="background: #3f3c3d; text-transform: uppercase;">
                                 <tr>
                                     <th style="text-align: center;">ID</th>
+                                    <th style="text-align: center;">Tipo</th>
                                     <th style="text-align: center;">Nombre</th>
-                                    <th style="text-align: center;">Apellido paterno</th>
-                                    <th style="text-align: center;">Apellido materno</th>
-                                    <th style="text-align: center;">Fecha de nacimiento</th>
-                                    <th style="text-align: center;">Número celular</th>
-                                    <th style="text-align: center;">Membresía</th>
-                                    <th style="text-align: center;">Clases inscritas</th>
+                                    <th style="text-align: center;">Marca</th>
+                                    <th style="text-align: center;">Costo</th>
+                                    <th style="text-align: center;">Cantidad</th>
                                     <th style="text-align: center;">Acciones</th>
                                 </tr>
                             </thead>
@@ -230,41 +218,41 @@
                         </table>
                     </div>
 
-
                     <!-- Script para cargar las membresías -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <script>
                         const token_bearer = localStorage.getItem('token');
 
                         // Función para manejar el clic en el botón "Editar"
                         function handleEditClick() {
                             // Obtén el ID de la membresía que deseas editar desde la fila
-                            const miembroId = $(this).closest('tr').find('td:first').text();
+                            const inventarioId = $(this).closest('tr').find('td:first').text();
 
                             // Redirige a la página de edición con el ID de la membresía como parámetro
-                            window.location.href = `editarMiembro.html?id=${miembroId}`;
+                            window.location.href = `editarInventario.html?id=${inventarioId}`;
                         }
 
                         // Función para manejar el clic en el botón "Eliminar"
                         function handleDeleteClick() {
                             // Obtén el ID de la membresía que deseas eliminar desde la fila
-                            const miembroId = $(this).closest('tr').find('td:first').text();
+                            const inventarioId = $(this).closest('tr').find('td:first').text();
 
                             // Muestra un mensaje de confirmación al usuario
-                            const confirmacion = confirm('¿Estás seguro de que deseas eliminar este miembro?');
+                            const confirmacion = confirm('¿Estás seguro de que deseas eliminar este inventario?');
 
                             if (confirmacion) {
                                 // Realiza la lógica de eliminación, por ejemplo, una solicitud DELETE a la API
-                                eliminarMiembro(miembroId);
+                                eliminarInventario(inventarioId);
                             }
                         }
 
                         // Función para realizar la eliminación de la membresía mediante una solicitud DELETE a la API
-                        function eliminarMiembro(miembroId) {
+                        function eliminarInventario(inventarioId) {
                             // Aquí puedes agregar la lógica para enviar una solicitud DELETE a la API
                             // Puedes usar fetch o jQuery.ajax para realizar la solicitud
 
                             // Ejemplo usando fetch
-                            fetch(`/api/v1/miembro/${miembroId}`, {
+                            fetch(`/api/v1/inventario/${inventarioId}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -274,68 +262,49 @@
                                 .then(response => {
                                     if (response.ok) {
                                         // Aquí puedes realizar acciones adicionales después de la eliminación
-                                        console.log('Miembro eliminado con éxito');
-                                        window.location.href = './miembro.html';
+                                        console.log('Inventario eliminado con éxito');
+                                        window.location.href = './inventario.html';
                                     } else {
-                                        throw new Error('Miembro tiene usuarios asociados');
+                                        throw new Error('Error al eliminar el inventario. BAD RESPONSE');
                                     }
                                 })
                                 .catch(response => {
                                     console.error(response);
-                                    alert('Miembro tiene usuarios asociados');
-                                    window.location.href = './miembro.html';
+                                    alert('Se ha detectado un error al eliminar el inventario.');
+                                    window.location.href = './inventario.html';
                                 });
                         }
 
                         // Agrega un manejador de eventos para los botones "Editar" y "Eliminar"
-                        $('#miembroTable').on('click', '.btnEdit', handleEditClick);
-                        $('#miembroTable').on('click', '.btnDelete', handleDeleteClick);
+                        $('#inventarioTable').on('click', '.btnEdit', handleEditClick);
+                        $('#inventarioTable').on('click', '.btnDelete', handleDeleteClick);
 
 
 
                         $(document).ready(function () {
                             // Realizar una solicitud GET a la API para obtener las membresías
                             $.ajax({
-                                url: '/api/v1/miembro',
+                                url: '/api/v1/inventario',
                                 type: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'Authorization': `Bearer ${token_bearer}`,
                                 },
                                 success: function (data) {
-
                                     // Limpiar el cuerpo de la tabla
-                                    $('#miembroTable tbody').empty();
+                                    $('#inventarioTable tbody').empty();
 
                                     // Iterar a través de los datos recibidos y agregar filas a la tabla
-                                    data.forEach(function (miembro) {
-                                        console.log(miembro);
-                                        const fecha = new Date(miembro.fecha_nacimiento);
-                                        const fechaFormateada = fecha.toLocaleDateString(
-                                            'es-ES', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                            });
-
-
+                                    data.forEach(function (inventario) {
+                                        console.log(inventario);
+                                        
                                         var row = '<tr>' +
-                                            '<td>' + miembro._id + '</td>' +
-                                            '<td>' + miembro.nombre + '</td>' +
-                                            '<td>' + miembro.apellido_paterno + '</td>' +
-                                            '<td>' + miembro.apellido_materno + '</td>' +
-                                            '<td>' + fechaFormateada + '</td>' +
-                                            '<td>' + miembro.numero_celular + '</td>' +
-                                            '<td>' + miembro.id_membresia + '</td>' +
-                                            '<td>';
-
-                                        // Utilizamos un bucle for para imprimir cada elemento de miembro.clases_inscritas
-                                        for (var i = 0; i < miembro.clases_inscritas
-                                            .length; i++) {
-                                            row += miembro.clases_inscritas[i] + '<br>';
-                                        }
-
-                                        row += '</td>' +
+                                            '<td>' + inevntario._id + '</td>' +
+                                            '<td>' + membresia.tipo + '</td>' +
+                                            '<td>' + membresia.nombre + '</td>' +
+                                            '<td>' + membresia.marca + '</td>' +
+                                            '<td>' + membresia.costo + '</td>' +
+                                            '<td>' + membresia.cantidad + '</td>' +
                                             '<td>' +
                                             '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
                                             ' style="border-radius: 100px; border-width: 2px;">' +
@@ -348,26 +317,26 @@
                                             '</svg> </button>' +
                                             '</td>' +
                                             '</tr>';
-                                        $('#miembroTable tbody').append(row);
+                                        $('#membresiaTable tbody').append(row);
                                     });
 
                                     // Agrega un manejador de eventos para los botones "Editar" y "Eliminar" después de cargar las filas
-                                    $('#miembroTable').on('click', '.btnEdit', handleEditClick);
-                                    $('#miembroTable').on('click', '.btnDelete',
+                                    $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
+                                    $('#membresiaTable').on('click', '.btnDelete',
                                         handleDeleteClick);
                                 },
                                 error: function (error) {
-                                    console.log('Error al cargar los miembros: ' + error);
+                                    console.log('Error al cargar las membresías: ' + error);
                                 }
                             });
                         });
                     </script>
-
-                    <!-- script cambiar elemenos de membresia por nombre -->
                     <script>
-                       
+                        document.getElementById('btnEdit').addEventListener('click', function () {
+                            // Redirige a la página "editarMembresia.html"
+                            window.location.href = './editarMembresia.html';
+                        });
                     </script>
-                    
 
                 </div><!-- /.container-fluid -->
             </section>
@@ -378,73 +347,24 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar miembro</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
                             <span class="close" id="closeModalBtn">&times;</span>
                         </div>
                         <div class="modal-body">
-                            <form id="miembroForm">
+                            <form id="membresiaForm">
                                 <div class="form-group">
-                                    <label class="col-form-label">Nombre:</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label">Apellido paterno:</label>
-                                    <input type="text" class="form-control" id="apellido_paterno"
-                                        name="apellido_paterno" required>
+                                    <label class="col-form-label">Tipo:</label>
+                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Apellido materno:</label>
-                                    <input type="text" class="form-control" id="apellido_materno"
-                                        name="apellido_materno" required>
+                                    <label for="costo">Costo:</label>
+                                    <input type="number" class="form-control" id="costo" name="costo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                                    <input type="date" class="form-control" id="fecha_nacimiento"
-                                        name="fecha_nacimiento" required>
+                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
+                                    <input type="date" class="form-control" id="fecha_renovacion"
+                                        name="fecha_renovacion" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="costo">Número celular:</label>
-                                    <input type="number" class="form-control" id="numero_celular" name="numero_celular"
-                                        required>
-                                </div>
-                                <!-- membresias-selector -->
-                                <div class="form-group mb-0">
-                                    <label for="membresia">Membresia:</label>
-                                </div>
-                                <select class="form-control membresias-selector cls2" name="membresia" id="membresia"
-                                    required>
-                                </select>
-                                <div class="form-group mb-0 mt-3">
-                                    <label for="clases">Clases inscritas:</label>
-                                </div>
-                                <select class="form-control clases-selector cls" name="clases[]" multiple="multiple"
-                                    id="clases" name="clases" required>
-                                </select>
-
-                                <style>
-                                    .cls {
-                                        width: 467px;
-                                    }
-
-                                    .cls2 {
-                                        width: 467px;
-                                    }
-
-                                    .select2-container--default .select2-selection--single {
-                                        height: 40px;
-                                        /* ajusta la altura según tus necesidades */
-                                    }
-
-                                    .select2-container--default .select2-selection--multiple {
-                                        height: 40px;
-                                        /* ajusta la altura según tus necesidades */
-                                    }
-                                </style>
-                                <script>
-                                    $(document).ready(function () {
-                                        $('.clases-selector').select2();
-                                    });
-                                </script>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Agregar</button>
@@ -454,74 +374,44 @@
                 </div>
             </div>
 
-
-            <!-- script para agregar valores a select2 membresias -->
-            <script>
-                // Espera a que el DOM esté listo
-                $(document).ready(function () {
-                    // Realiza una solicitud AJAX al servidor para obtener las membresías
-                    $.ajax({
-                        url: '/api/v1/membresia', // Reemplaza con la ruta correcta
-                        method: 'GET',
-                        dataType: 'json',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token_bearer}`,
-                        },
-                        success: function (data) {
-                            // Llena el select con las opciones recibidas desde el servidor
-                            var select = $('.membresias-selector');
-                            $.each(data, function (index, item) {
-                                select.append('<option value="' + item._id + '">' + item
-                                    .tipo + '</option>');
-                            });
-
-                            // Inicializa Select2 después de agregar las opciones
-                            select.select2();
-                        },
-                        error: function (error) {
-                            console.error('Error al obtener las membresías:', error);
-                        }
-                    });
-                });
-            </script>
-
-            <!-- script para agregar valores de clases inscritas -->
-            <script>
-                // Espera a que el DOM esté listo
-                $(document).ready(function () {
-                    // Realiza una solicitud AJAX al servidor para obtener las membresías
-                    $.ajax({
-                        url: '/api/v1/clase', // Reemplaza con la ruta correcta
-                        method: 'GET',
-                        dataType: 'json',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token_bearer}`,
-                        },
-                        success: function (data) {
-                            // Llena el select con las opciones recibidas desde el servidor
-                            var select = $('.clases-selector');
-                            $.each(data, function (index, item) {
-                                select.append('<option value="' + item._id + '">' + item
-                                    .nombre + '</option>');
-                            });
-                        },
-                        error: function (error) {
-                            console.error('Error al obtener las clases:', error);
-                        }
-                    });
-                });
-            </script>
-
-
+            <!-- modal para editar membresia -->
+            <div id="modalEdit" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
+                            <span class="close" id="closeModalBtn">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="membresiaForm">
+                                <div class="form-group">
+                                    <label class="col-form-label">Tipo:</label>
+                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="costo">Costo:</label>
+                                    <input type="number" class="form-control" id="costo" name="costo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
+                                    <input type="date" class="form-control" id="fecha_renovacion"
+                                        name="fecha_renovacion" required>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Agregar</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <!-- script para modal de agregar -->
             <script>
                 const openModalBtn = document.getElementById('openModalBtn');
                 const modal = document.getElementById('modalasasa');
                 const closeModalBtn = document.getElementById('closeModalBtn');
-                const miembroForm = document.getElementById('miembroForm');
+                const membresiaForm = document.getElementById('membresiaForm');
 
                 openModalBtn.addEventListener('click', () => {
                     modal.style.display = 'block';
@@ -531,59 +421,43 @@
                     modal.style.display = 'none';
                 });
 
-                miembroForm.addEventListener('submit', (event) => {
+                membresiaForm.addEventListener('submit', (event) => {
                     event.preventDefault();
 
-                    const nombre = document.getElementById('nombre').value;
-                    const apellidoPaterno = document.getElementById('apellido_paterno').value;
-                    const apellidoMaterno = document.getElementById('apellido_materno').value;
-                    const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
-                    const numeroCelular = document.getElementById('numero_celular').value;
-                    const membresia = document.getElementById('membresia').value;
-
-                    const clasesSelect = document.getElementById('clases');
-                    const clases = Array.from(clasesSelect.selectedOptions).map(option => option.value);
-
+                    const tipo = document.getElementById('tipo').value;
+                    const costo = document.getElementById('costo').value;
+                    const fechaRenovacion = document.getElementById('fecha_renovacion').value;
 
                     // Aquí puedes realizar alguna acción, como enviar los datos al servidor o mostrarlos en la página.
-                    console.log('Nombre:', nombre);
-                    console.log('Apellido Paterno:', apellidoPaterno);
-                    console.log('Apellido Materno:', apellidoMaterno);
-                    console.log('Fecha de Nacimiento:', fechaNacimiento);
-                    console.log('Número Celular:', numeroCelular);
-                    console.log('Membresía:', membresia);
-                    console.log('Clases:', clases);
-
+                    console.log('Tipo:', tipo);
+                    console.log('Costo:', costo);
+                    console.log('Fecha de Renovación:', fechaRenovacion);
 
                     // Cerrar el modal después de enviar los datos (puedes agregar más lógica aquí).
-                    const nuevoMiembro = {
-                        nombre: nombre,
-                        apellido_paterno: apellidoPaterno,
-                        apellido_materno: apellidoMaterno,
-                        fecha_nacimiento: fechaNacimiento,
-                        numero_celular: numeroCelular,
-                        id_membresia: membresia,
-                        clases_inscritas: clases,
+                    const nuevaMembresia = {
+                        tipo: tipo,
+                        costo: costo, // Costo de la membresía
+                        fecha_renovacion: fechaRenovacion // Fecha de renovación en formato yyyy-mm-dd
                     };
 
-                    fetch('/api/v1/miembro', {
+                    fetch('/api/v1/membresia', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${token_bearer}`,
                             },
-                            body: JSON.stringify(nuevoMiembro), // Convierte el objeto a JSON
+                            body: JSON.stringify(nuevaMembresia), // Convierte el objeto a JSON
                         })
                         .then(response => {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                throw new Error('Error al agregar el registro de miembro');
+                                throw new Error('Error al agregar el registro de membresía');
                             }
                         })
                         .then(data => {
                             console.log(data);
-                            window.location.href = './miembro.html';
+                            window.location.href = './membresias.html';
                             // Registro de membresía agregado con éxito
                         })
                         .catch(error => {
@@ -616,19 +490,12 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
-
-    <!-- select2 field -->
-    <script>
-        $(document).ready(function () {
-            $('.membresias-selector').select2();
-        });
-    </script>
-
+    <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <!-- <script src="../plugins/jquery/jquery.min.js"></script> -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <!-- <script src="../plugins/jquery-ui/jquery-ui.min.js"></script> -->
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
