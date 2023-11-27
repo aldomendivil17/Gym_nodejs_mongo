@@ -82,6 +82,14 @@
         // Redirige al usuario a la página de inicio de sesión
         window.location.href = '/login'; // Cambia la ruta según tu estructura
       });
+
+      //Cerrar sesion en el sidebar
+      document.getElementById('logoutButtonSidebar').addEventListener('click', () => {
+        // Elimina el token del almacenamiento local al cerrar sesión
+        localStorage.removeItem('token');
+        // Redirige al usuario a la página de inicio de sesión
+        window.location.href = '/login';
+      });
     </script>
 
 
@@ -149,10 +157,18 @@
                 </ul>
               </li>
 
-             
+              <!-- item para cerrar sesion -->
+              <li class="nav-item menu-open">
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/login" id="logoutButtonSidebar" class="nav-link">
+                      <i class="nav-icon fas fa-sign-out-alt"></i>
+                      <p>Cerrar Sesión</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
             </div>
-
-
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -172,32 +188,36 @@
           </div><!-- /.row -->
           <div class="row" style="padding-left:10px">
             <div class="col-md-3">
-              <div class="card mt-3" style="height:200px; width:100%">
-                <div class="card-body" style="background-color:#e7e8d3">
+              <div class="card mt-3"
+                style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                <div class="card-body" style="background-color: #f5eba4;">
                   <h5 class="card-title">Ingresos Pagados x Mes</h5>
-                  <p class="card-text"> $0</p>
+                  <p class="card-text" style="font-size: 1.2em; color: #495057;">$0</p>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card mt-3" style="height:200px; width:100%">
-                <div class="card-body" style="background-color:#e7e8d3">
+              <div class="card mt-3"
+                style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                <div class="card-body" style="background-color: #f5eba4;">
                   <h5 class="card-title">Total Miembros</h5>
                   <p class="card-text">2 miembros</p>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card mt-3" style="height:200px; width:100%">
-                <div class="card-body" style="background-color:#e7e8d3">
+              <div class="card mt-3"
+                style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                <div class="card-body" style="background-color: #f5eba4;">
                   <h5 class="card-title">Inscritos este Mes</h5>
                   <p class="card-text">Total Inscritos: 2</p>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card mt-3" style="height:200px; width:100%">
-                <div class="card-body" style="background-color:#e7e8d3">
+              <div class="card mt-3"
+                style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                <div class="card-body" style="background-color: #f5eba4;">
                   <h5 class="card-title">Ingresos este Mes</h5>
                   <p class="card-text">Total Ingresos: $0</p>
                 </div>
