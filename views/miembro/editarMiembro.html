@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://rawgit.com/select2/select2/4.0.6/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://rawgit.com/select2/select2/4.0.6/dist/js/select2.full.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -286,7 +290,7 @@
                         numero_celular = data.numero_celular;
                         membresia = data.id_membresia;
                         console.log("membresia: ", membresia);
-                        clases = data.clases_ins;
+                        clases = data.clases_inscritas;
 
                         console.log("clases: ", clases);
 
@@ -313,7 +317,7 @@
                         document.getElementById('apellido_materno').value = apellido_materno;
                         document.getElementById('fecha_nacimiento').value = fechaFormateada;
                         document.getElementById('numero_celular').value = numero_celular;
-                        // document.getElementById('membresia').value = membresia;
+                        document.getElementById('membresia').value = membresia;
                         // document.getElementById('clases').value = clases;
 
                     })
@@ -356,7 +360,8 @@
                             <div class="form-group mb-0">
                                 <label for="membresia">Membresia:</label>
                             </div>
-                            <select class="form-control membresias-selector cls2" name="membresia" id="membresia" required >
+                            <select class="form-control membresias-selector cls2" name="membresia" id="membresia"
+                                required>
                             </select>
                             <div class="form-group mb-0 mt-3">
                                 <label for="clases">Clases inscritas:</label>
@@ -425,7 +430,7 @@
                     clases_inscritas: clases,
                 };
 
-                
+
 
                 // Realiza la solicitud PUT
                 fetch(`/api/v1/miembro/${miembroId}`, {
@@ -466,11 +471,7 @@
         }
     </script>
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>

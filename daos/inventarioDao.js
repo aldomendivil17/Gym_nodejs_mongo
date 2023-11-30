@@ -1,27 +1,26 @@
-const Inventario = require('../models/inventario');
+const inventario = require('../models/inventario');
 
 class InventarioDao {
-    
-    async findAllInventarios() {
-        return await Inventario.find({});
-    }
+  async findAllInventarios() {
+    return await inventario.find({});
+  }
 
-    async findInventarioById(id) {
-        return await Inventario.findOne({ _id: id });
-    }
+  async findInventarioById(id) {
+    return await inventario.findOne({ _id: id });
+  }
 
-    async addInventario(inventario) {
-        await inventario.save();
-    }
+  async addInventario(inventario) {
+    await inventario.save();
+    console.log('Inventario agregado exitosamente');
+  }
 
-    async updateInventario(filter, update) {
-        await Inventario.updateOne(filter, update);
-    }
+  async updateInventario(filter, update) {
+    await inventario.updateOne(filter, update);
+  }
 
-    async deleteInventarioById(id) {
-        await  Inventario.deleteOne({ _id: id });
-    }
-
+  async deleteInventarioById(id) {
+    await inventario.deleteOne({ _id: id });
+  }
 }
 
 module.exports = new InventarioDao();

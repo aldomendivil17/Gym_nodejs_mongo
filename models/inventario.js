@@ -22,6 +22,21 @@ const inventarioSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    modelo: {
+        type: String
+    },
+    fecha_adquisicion: {
+        type: Date
+    },
+    categoria: {
+        type: String,
+    },
+    contenido: {
+        type: String,
+    },
+    precio_venta: {
+        type: Number,
+    },
 });
 
 
@@ -55,9 +70,5 @@ const Inventario = mongoose.model('Inventario', inventarioSchema);
 const MaquinaInventario = Inventario.discriminator('Maquina', maquinaInventarioSchema);
 const ProductoInventario = Inventario.discriminator('Producto', productoInventarioSchema);
 
-module.exports = {
-    Inventario,
-    MaquinaInventario,
-    ProductoInventario,
-};
+module.exports = Inventario;
 

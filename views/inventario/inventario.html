@@ -185,7 +185,8 @@
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                     <div class="col-sm-12 d-flex justify-content-end align-items-center ">
-                        <button type="button" class="btn btn-success" id="openModalBtn">Agregar</button>
+                        <button type="button" class="btn btn-success m-2" id="openModalBtnProducto">Agregar producto</button>
+                        <button type="button" class="btn btn-success m-2" id="openModalBtnMaquina">Agregar máquinas</button>
                     </div><!-- /.col -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -299,12 +300,12 @@
                                         console.log(inventario);
                                         
                                         var row = '<tr>' +
-                                            '<td>' + inevntario._id + '</td>' +
-                                            '<td>' + membresia.tipo + '</td>' +
-                                            '<td>' + membresia.nombre + '</td>' +
-                                            '<td>' + membresia.marca + '</td>' +
-                                            '<td>' + membresia.costo + '</td>' +
-                                            '<td>' + membresia.cantidad + '</td>' +
+                                            '<td>' + inventario._id + '</td>' +
+                                            '<td>' + inventario.tipo + '</td>' +
+                                            '<td>' + inventario.nombre + '</td>' +
+                                            '<td>' + inventario.marca + '</td>' +
+                                            '<td>' + inventario.costo + '</td>' +
+                                            '<td>' + inventario.cantidad + '</td>' +
                                             '<td>' +
                                             '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
                                             ' style="border-radius: 100px; border-width: 2px;">' +
@@ -317,16 +318,16 @@
                                             '</svg> </button>' +
                                             '</td>' +
                                             '</tr>';
-                                        $('#membresiaTable tbody').append(row);
+                                        $('#inventarioTable tbody').append(row);
                                     });
 
                                     // Agrega un manejador de eventos para los botones "Editar" y "Eliminar" después de cargar las filas
-                                    $('#membresiaTable').on('click', '.btnEdit', handleEditClick);
-                                    $('#membresiaTable').on('click', '.btnDelete',
+                                    $('#inventarioTable').on('click', '.btnEdit', handleEditClick);
+                                    $('#inventarioTable').on('click', '.btnDelete',
                                         handleDeleteClick);
                                 },
                                 error: function (error) {
-                                    console.log('Error al cargar las membresías: ' + error);
+                                    console.log('Error al cargar los inventarios: ' + error);
                                 }
                             });
                         });
@@ -334,36 +335,51 @@
                     <script>
                         document.getElementById('btnEdit').addEventListener('click', function () {
                             // Redirige a la página "editarMembresia.html"
-                            window.location.href = './editarMembresia.html';
+                            window.location.href = './inventario.html';
                         });
                     </script>
 
                 </div><!-- /.container-fluid -->
             </section>
-            <!-- /.content -->
+            <!-- /.content -->  
 
-            <!-- Modal para agregar membresía -->
-            <div id="modalasasa" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- Modal para agregar producto -->
+            <div id="producto" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
-                            <span class="close" id="closeModalBtn">&times;</span>
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                            <span class="close" id="closeModalBtnProducto">&times;</span>
                         </div>
                         <div class="modal-body">
-                            <form id="membresiaForm">
+                            <form id="productoForm">
                                 <div class="form-group">
-                                    <label class="col-form-label">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                    <label class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Marca:</label>
+                                    <input type="text" class="form-control" id="marca" name="marca" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="costo">Costo:</label>
                                     <input type="number" class="form-control" id="costo" name="costo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
-                                    <input type="date" class="form-control" id="fecha_renovacion"
-                                        name="fecha_renovacion" required>
+                                    <label for="costo">Cantidad:</label>
+                                    <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Categoria:</label>
+                                    <input type="text" class="form-control" id="categoria" name="categoria" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="costo">Contenido:</label>
+                                    <input type="number" class="form-control" id="contenido" name="contenido" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="costo">Precio venta:</label>
+                                    <input type="number" class="form-control" id="precio_venta" name="precio_venta" required>
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -374,28 +390,40 @@
                 </div>
             </div>
 
-            <!-- modal para editar membresia -->
-            <div id="modalEdit" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <!-- Modal para agregar maquina -->
+            <div id="maquina" class="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Membresía</h5>
-                            <span class="close" id="closeModalBtn">&times;</span>
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar máquina</h5>
+                            <span class="close" id="closeModalBtnMaquina">&times;</span>
                         </div>
                         <div class="modal-body">
-                            <form id="membresiaForm">
+                            <form id="maquinaForm">
                                 <div class="form-group">
-                                    <label class="col-form-label">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" required>
+                                    <label class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre2" name="nombre2" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Marca:</label>
+                                    <input type="text" class="form-control" id="marca2" name="marca2" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="costo">Costo:</label>
-                                    <input type="number" class="form-control" id="costo" name="costo" required>
+                                    <input type="number" class="form-control" id="costo2" name="costo2" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fechaRenovacion">Fecha de Renovación:</label>
-                                    <input type="date" class="form-control" id="fecha_renovacion"
-                                        name="fecha_renovacion" required>
+                                    <label for="costo">Cantidad:</label>
+                                    <input type="number" class="form-control" id="cantidad2" name="cantidad2" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Modelo:</label>
+                                    <input type="text" class="form-control" id="modelo" name="modelo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="costo">Fecha de adquisición:</label>
+                                    <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" required>
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -405,59 +433,89 @@
                     </div>
                 </div>
             </div>
+
+
 
             <!-- script para modal de agregar -->
             <script>
-                const openModalBtn = document.getElementById('openModalBtn');
-                const modal = document.getElementById('modalasasa');
-                const closeModalBtn = document.getElementById('closeModalBtn');
-                const membresiaForm = document.getElementById('membresiaForm');
+                const openModalBtnProducto = document.getElementById('openModalBtnProducto');
+                const openModalBtnMaquina = document.getElementById('openModalBtnMaquina');
+                
+                const modal1 = document.getElementById('producto');
+                const modal2 = document.getElementById('maquina');
+                
+                const closeModalBtnProducto = document.getElementById('closeModalBtnProducto');
+                const closeModalBtnMaquina = document.getElementById('closeModalBtnMaquina');
 
-                openModalBtn.addEventListener('click', () => {
-                    modal.style.display = 'block';
+                const productoForm = document.getElementById('productoForm');
+                const maquinaForm = document.getElementById('maquinaForm');
+
+                // listener para abrir y cerrar el modal producto
+                openModalBtnProducto.addEventListener('click', () => {
+                    modal1.style.display = 'block';
                 });
 
-                closeModalBtn.addEventListener('click', () => {
-                    modal.style.display = 'none';
+                closeModalBtnProducto.addEventListener('click', () => {
+                    modal1.style.display = 'none';
                 });
 
-                membresiaForm.addEventListener('submit', (event) => {
+
+                // listener para abrir y cerrar el modal maquina
+                openModalBtnMaquina.addEventListener('click', () => {
+                    modal2.style.display = 'block';
+                });
+
+                closeModalBtnMaquina.addEventListener('click', () => {
+                    modal2.style.display = 'none';
+                });
+
+
+                // listener para enviar el formulario de producto
+                productoForm.addEventListener('submit', (event) => {
                     event.preventDefault();
 
-                    const tipo = document.getElementById('tipo').value;
+                    const tipo = "producto"
+                    const nombre = document.getElementById('nombre').value;
+                    const marca = document.getElementById('marca').value;
                     const costo = document.getElementById('costo').value;
-                    const fechaRenovacion = document.getElementById('fecha_renovacion').value;
-
+                    const cantidad = document.getElementById('cantidad').value;
+                    const categoria = document.getElementById('categoria').value;
+                    const contenido = document.getElementById('contenido').value;
+                    const precio_venta = document.getElementById('precio_venta').value;
+                    
                     // Aquí puedes realizar alguna acción, como enviar los datos al servidor o mostrarlos en la página.
-                    console.log('Tipo:', tipo);
-                    console.log('Costo:', costo);
-                    console.log('Fecha de Renovación:', fechaRenovacion);
+                    console.log(tipo, nombre, marca, costo, cantidad, categoria, precio_venta);
 
                     // Cerrar el modal después de enviar los datos (puedes agregar más lógica aquí).
-                    const nuevaMembresia = {
+                    const nuevoProducto = {
                         tipo: tipo,
-                        costo: costo, // Costo de la membresía
-                        fecha_renovacion: fechaRenovacion // Fecha de renovación en formato yyyy-mm-dd
+                        nombre: nombre,
+                        marca: marca,
+                        costo: costo,
+                        cantidad: cantidad,
+                        categoria: categoria,
+                        contenido: contenido,
+                        precio_venta: precio_venta
                     };
 
-                    fetch('/api/v1/membresia', {
+                    fetch('/api/v1/inventario', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${token_bearer}`,
                             },
-                            body: JSON.stringify(nuevaMembresia), // Convierte el objeto a JSON
+                            body: JSON.stringify(nuevoProducto), // Convierte el objeto a JSON
                         })
                         .then(response => {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                throw new Error('Error al agregar el registro de membresía');
+                                throw new Error('Error al agregar el registro de inventario');
                             }
                         })
                         .then(data => {
                             console.log(data);
-                            window.location.href = './membresias.html';
+                            window.location.href = './inventario.html';
                             // Registro de membresía agregado con éxito
                         })
                         .catch(error => {
@@ -466,6 +524,64 @@
                         });
                     modal.style.display = 'none';
                 });
+                
+
+                maquinaForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const tipo = "maquina"
+                    const nombre = document.getElementById('nombre2').value;
+                    const marca = document.getElementById('marca2').value;
+                    const costo = document.getElementById('costo2').value;
+                    const cantidad = document.getElementById('cantidad2').value;
+                    const modelo = document.getElementById('modelo').value;
+                    const fecha_adquisicion = document.getElementById('fecha_adquisicion').value;
+
+                    
+                    
+                    // Aquí puedes realizar alguna acción, como enviar los datos al servidor o mostrarlos en la página.
+                    console.log(tipo, nombre, marca, costo, cantidad, modelo, fecha_adquisicion);
+
+                    // Cerrar el modal después de enviar los datos (puedes agregar más lógica aquí).
+                    const nuevaMaquina = {
+                        tipo: tipo,
+                        nombre: nombre,
+                        marca: marca,
+                        costo: costo,
+                        cantidad: cantidad,
+                        modelo: modelo,
+                        fecha_adquisicion: fecha_adquisicion
+                    };
+
+                    fetch('/api/v1/inventario', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token_bearer}`,
+                            },
+                            body: JSON.stringify(nuevaMaquina), // Convierte el objeto a JSON
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Error al agregar el registro de inventario');
+                            }
+                        })
+                        .then(data => {
+                            console.log(data);
+                            window.location.href = './inventario.html';
+                            // Registro de membresía agregado con éxito
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // Manejar el error, por ejemplo, redirigir al usuario a una página de error
+                        });
+                    modal.style.display = 'none';
+                });
+                
+                
+            
             </script>
 
 

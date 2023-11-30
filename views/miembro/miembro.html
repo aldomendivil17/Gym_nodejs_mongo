@@ -219,7 +219,7 @@
                                     <th style="text-align: center;">Fecha de nacimiento</th>
                                     <th style="text-align: center;">Número celular</th>
                                     <th style="text-align: center;">Membresía</th>
-                                    <th style="text-align: center;">Clases inscritas</th>
+                                    <!-- <th style="text-align: center;">Clases inscritas</th> -->
                                     <th style="text-align: center;">Acciones</th>
                                 </tr>
                             </thead>
@@ -318,37 +318,78 @@
                                                 year: 'numeric',
                                             });
 
+                                        let tipo_membresia = "";
+                                        console.log("antes: ", tipo_membresia);
 
-                                        var row = '<tr>' +
-                                            '<td>' + miembro._id + '</td>' +
-                                            '<td>' + miembro.nombre + '</td>' +
-                                            '<td>' + miembro.apellido_paterno + '</td>' +
-                                            '<td>' + miembro.apellido_materno + '</td>' +
-                                            '<td>' + fechaFormateada + '</td>' +
-                                            '<td>' + miembro.numero_celular + '</td>' +
-                                            '<td>' + miembro.id_membresia + '</td>' +
-                                            '<td>';
-
-                                        // Utilizamos un bucle for para imprimir cada elemento de miembro.clases_inscritas
-                                        for (var i = 0; i < miembro.clases_inscritas
-                                            .length; i++) {
-                                            row += miembro.clases_inscritas[i] + '<br>';
+                                        function obtenerTipoMembresia() {
+                                            return new Promise((resolve, reject) => {
+                                                obtenerNombrePorId(miembro
+                                                    .id_membresia,
+                                                    function (tipo) {
+                                                        if (tipo !== null) {
+                                                            tipo_membresia =
+                                                                tipo;
+                                                            console.log(
+                                                                "dentro: ",
+                                                                tipo_membresia
+                                                            );
+                                                            resolve();
+                                                        } else {
+                                                            console.log(
+                                                                'No se encontró el elemento con ID '
+                                                            );
+                                                            reject();
+                                                        }
+                                                    });
+                                            });
                                         }
 
-                                        row += '</td>' +
-                                            '<td>' +
-                                            '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
-                                            ' style="border-radius: 100px; border-width: 2px;">' +
-                                            ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"> ' +
-                                            '<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>' +
-                                            '</svg> </button>' +
-                                            '<button type="button" class="btn btn-outline btn-outline-secondary btnDelete ml-3" data-bs-toggle="modal" data-bs-target="#modalD" style="border-radius: 100px; border-width: 2px;">' +
-                                            ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"> ' +
-                                            '<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a.2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>' +
-                                            '</svg> </button>' +
-                                            '</td>' +
-                                            '</tr>';
-                                        $('#miembroTable tbody').append(row);
+                                        obtenerTipoMembresia().then(() => {
+
+                                            var row = '<tr>' +
+                                                '<td>' + miembro._id + '</td>' +
+                                                '<td>' + miembro.nombre + '</td>' +
+                                                '<td>' + miembro.apellido_paterno +
+                                                '</td>' +
+                                                '<td>' + miembro.apellido_materno +
+                                                '</td>' +
+                                                '<td>' + fechaFormateada + '</td>' +
+                                                '<td>' + miembro.numero_celular +
+                                                '</td>' +
+                                                '<td>' + tipo_membresia + '</td>' +
+
+                                            //     '<td>';
+
+                                            // // Utilizamos un bucle for para imprimir cada elemento de miembro.clases_inscritas
+                                            // for (var i = 0; i < miembro
+                                            //     .clases_inscritas
+                                            //     .length; i++) {
+                                            //     row += miembro.clases_inscritas[i]
+                                            //         .nombre + '<br>';
+                                            // }
+
+                                            // row += '</td>' +
+                                                '<td>' +
+                                                '<button type="button" class="btn btn-outline btn-outline-secondary btnEdit" ' +
+                                                ' style="border-radius: 100px; border-width: 2px;">' +
+                                                ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"> ' +
+                                                '<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>' +
+                                                '</svg> </button>' +
+                                                '<button type="button" class="btn btn-outline btn-outline-secondary btnDelete ml-3" data-bs-toggle="modal" data-bs-target="#modalD" style="border-radius: 100px; border-width: 2px;">' +
+                                                ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16"> ' +
+                                                '<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a.2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>' +
+                                                '</svg> </button>' +
+                                                '</td>' +
+                                                '</tr>';
+                                            $('#miembroTable tbody').append(row);
+                                        }).catch(() => {
+                                            console.log(
+                                                "Error al obtener el tipo de membresia"
+                                            );
+                                        });
+
+
+
                                     });
 
                                     // Agrega un manejador de eventos para los botones "Editar" y "Eliminar" después de cargar las filas
@@ -361,13 +402,71 @@
                                 }
                             });
                         });
+
+
+                        function obtenerNombrePorId(id, callback) {
+                            // Hacer la solicitud AJAX
+                            $.ajax({
+                                url: `/api/v1/membresia/${id}`, // Agrega el ID a la URL de la API
+                                type: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                                success: function (data) {
+                                    // Manejar la respuesta exitosa
+                                    console.log('Respuesta de la API:', data);
+
+                                    // Suponiendo que la respuesta contiene un campo 'nombre'
+                                    if (data && data.tipo) {
+                                        // Llamar al callback con el nombre como argumento
+                                        callback(data.tipo);
+                                    } else {
+                                        // Llamar al callback con null si no se encuentra el elemento
+                                        callback(null);
+                                    }
+                                },
+                                error: function (error) {
+                                    // Manejar errores de la solicitud
+                                    console.error('Error al hacer la solicitud:', error);
+
+                                    // Llamar al callback con null en caso de error
+                                    callback(null);
+                                }
+                            });
+                        }
+
+                        $(document).ready(function () {
+                            // Realiza una solicitud AJAX al servidor para obtener las membresías
+                            $.ajax({
+                                url: '/api/v1/miembro', // Reemplaza con la ruta correcta
+                                method: 'GET',
+                                dataType: 'json',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                                success: function (data) {
+                                    
+                                    // Llena el select con las opciones recibidas desde el servidor
+                                    var select = $('#aaaaas');
+                                    $.each(data, function (index, item) {
+                                        console.log(item.nombre);
+                                        select.append(item.nombre);
+                                    });
+                                },
+                                error: function (error) {
+                                    console.error('Error al obtener las clases:', error);
+                                }
+                            });
+                        });
                     </script>
 
                     <!-- script cambiar elemenos de membresia por nombre -->
                     <script>
-                       
+
                     </script>
-                    
+
 
                 </div><!-- /.container-fluid -->
             </section>

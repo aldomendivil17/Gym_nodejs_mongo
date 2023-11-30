@@ -35,7 +35,15 @@ exports.addInventario = async (req, res, next) => {
             nombre: req.body.nombre,
             marca: req.body.marca,
             costo: req.body.costo,
-            cantidad: req.body.cantidad
+            cantidad: req.body.cantidad,
+            // maquina
+            modelo: req.body.modelo,
+            fecha_adquisicion: req.body.fecha_adquisicion,
+
+            // producto
+            categoria: req.body.categoria,
+            contenido: req.body.contenido,
+            precio_venta: req.body.precio_venta,
         });
 
         const validationError = datosNuevoInventario.validateSync();
