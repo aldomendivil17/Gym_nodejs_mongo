@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -40,57 +41,10 @@
         <li>
         </li>
         <li class="nav-item m-2">
-          <button class="btn btn-secondary" id="logoutButton">Cerrar Sesión</button>
+          <logout-button></logout-button>
         </li>
       </ul>
     </nav>
-
-    <!-- Boton para verificar token -->
-    <script>
-      const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
-      console.log('Token JWT en localStorage en INDEX:', localStorage.getItem('token'));
-      // Si hay un token almacenado, realiza una solicitud GET a la ruta protegida
-      fetch('/index', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Incluye el token en el encabezado
-        }
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Token inválido');
-          }
-        })
-        .then(data => {
-          console.log(data);
-          // El token es válido y el usuario puede acceder a la página principal
-        })
-        .catch(error => {
-          // El token es inválido o ha expirado, puedes redirigir al usuario a la página de inicio de sesión, por ejemplo
-          window.location.href = '/login';
-        });
-
-
-      // Agrega un manejador de eventos para cerrar sesión
-      document.getElementById('logoutButton').addEventListener('click', () => {
-        // Elimina el token del almacenamiento local al cerrar sesión
-        localStorage.removeItem('token');
-        // Redirige al usuario a la página de inicio de sesión
-        window.location.href = '/login'; // Cambia la ruta según tu estructura
-      });
-
-      //Cerrar sesion en el sidebar
-      document.getElementById('logoutButtonSidebar').addEventListener('click', () => {
-        // Elimina el token del almacenamiento local al cerrar sesión
-        localStorage.removeItem('token');
-        // Redirige al usuario a la página de inicio de sesión
-        window.location.href = '/login';
-      });
-    </script>
-
 
     <!-- /.navbar -->
 
@@ -110,54 +64,17 @@
             <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="./index.html" class="d-block">Aldo Mendivil</a>
+            <nombre-usuario></nombre-usuario>
           </div>
         </div>
 
 
 
         <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+        <sidebar-component></sidebar-component>
 
-            <div>
-              <li class="nav-item menu-open">
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./index.html" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Inicio</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
 
-              <li class="nav-item menu-open">
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./membresia/membresias.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Membresías</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
 
-              <li class="nav-item menu-open">
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./clase/clases.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Clases</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </div>
-          </ul>
-        </nav>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
@@ -172,16 +89,17 @@
             <div class="col-sm-6">
               <h1 class="font-weight-bold m-4">Inicio</h1>
             </div><!-- /.col -->
-            
+
           </div>
-          
+
           <div class="row" style="padding-left:10px">
-            <div class="col-md-3"> 
+            <div class="col-md-3">
               <div class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body">
 
-                  <h2 class="card-title" style="font-size: 1.5em; color: #727270; font-weight:600">Ingresos Pagados x Mes</h2>
+                  <h2 class="card-title" style="font-size: 1.5em; color: #727270; font-weight:600">Ingresos Pagados x
+                    Mes</h2>
                   <br>
                   <br>
                   <br>
@@ -211,7 +129,8 @@
               <div class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body">
-                  <h5 class="card-title" style="font-size: 1.5em; color: #727270; font-weight:600">Inscritos este Mes</h5>
+                  <h5 class="card-title" style="font-size: 1.5em; color: #727270; font-weight:600">Inscritos este Mes
+                  </h5>
                   <br>
                   <br>
                   <br>
@@ -226,7 +145,8 @@
               <div class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body" style="background-color:  #727270">
-                  <h5 class="card-title" style="font-size: 1.5em; color:  #ffea2b; font-weight:600">Ingresos este Mes</h5>
+                  <h5 class="card-title" style="font-size: 1.5em; color:  #ffea2b; font-weight:600">Ingresos este Mes
+                  </h5>
                   <br>
                   <br>
                   <br>
@@ -236,32 +156,41 @@
                   <p class="card-text" style="font-size: 1.4em; color: #ffea2b; text-align: end;">Total Ingresos: $0</p>
                 </div>
               </div>
+
             </div>
+
           </div>
         </div>
+
       </div><!-- /.container-fluid -->
+
+      <!-- Definir el componente de barra lateral directamente -->
+
+
+      <!-- Utilizar el componente de barra lateral -->
+
+
+
+
+      <!-- <sidebar-component></sidebar-component>
+      <script src="./sidebar.html"></script> -->
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
   </div>
 
 
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2023 Olimpo Fitness.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
+    <footer-component></footer-component>
   </footer>
+
+  <!-- WEB COMPONENTS -->
+  <script src="./web_components/sidebar.js"></script>
+  <script src="./web_components/nombre-usuario.js"></script>
+  <script src="./web_components/footer.js"></script>
+  <script src="./web_components/logout-button.js"></script>
+  <script src="./web_components/auth-jwt.js"></script>
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

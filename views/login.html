@@ -103,6 +103,8 @@
 
                         if (token) {
                             console.log('Usuario autenticado');
+                            localStorage.setItem('nombre_usuario', username);
+                            console.log('Nombre de usuario en localStorage:', localStorage.getItem('nombre_usuario', username));
                             localStorage.setItem('token', token);
                             console.log('Token JWT en localStorage:', localStorage.getItem('token', token));
                             window.location.href = 'index.html';
