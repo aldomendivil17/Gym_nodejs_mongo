@@ -20,7 +20,7 @@ class NombreUsuario extends HTMLElement {
 
     // Crea el elemento <a> dentro del shadow DOM
     const anchor = document.createElement('a');
-    anchor.href = './index.html';
+    anchor.href = '/index.html';
     anchor.classList.add('d-block');
     anchor.id = 'nombre-usuario';
 

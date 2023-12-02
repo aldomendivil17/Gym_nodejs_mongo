@@ -11,7 +11,7 @@ class SidebarComponent extends HTMLElement {
             <li class="nav-item menu-open">
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="../index.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Inicio</p>
                   </a>
@@ -22,7 +22,7 @@ class SidebarComponent extends HTMLElement {
             <li class="nav-item menu-open">
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./membresia/membresias.html" class="nav-link">
+                  <a href="/membresia/membresias.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Membresías</p>
                   </a>
@@ -33,7 +33,7 @@ class SidebarComponent extends HTMLElement {
             <li class="nav-item menu-open">
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./clase/clases.html" class="nav-link">
+                  <a href="/clase/clases.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Clases</p>
                   </a>
@@ -44,7 +44,7 @@ class SidebarComponent extends HTMLElement {
             <li class="nav-item menu-open">
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./miembro/miembro.html" class="nav-link">
+                  <a href="/miembro/miembro.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Miembros</p>
                   </a>
@@ -55,7 +55,7 @@ class SidebarComponent extends HTMLElement {
             <li class="nav-item menu-open">
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./inventario/inventario.html" class="nav-link">
+                  <a href="/inventario/inventario.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Inventario</p>
                   </a>
