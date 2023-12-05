@@ -84,3 +84,12 @@ exports.deleteMiembro = async (req, res) => {
         res.status(500).json({ error: 'No se pudo eliminar el miembro' });
     }
 }
+
+exports.getTotalMiembros= async (req, res) => {
+    try {
+        const toatlMiembros = await MiembroDAO.countMiembros();
+        res.json({ toatlMiembros });
+    } catch (err) {
+        res.status(500).json({ error: 'No se pudo obtener el total de miembros.' });
+    }
+};

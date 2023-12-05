@@ -1,7 +1,7 @@
 const Miembro = require('../models/miembro');
 
 class MiembroDao {
-    
+
     async findAllMiembros() {
         return await Miembro.find({});
     }
@@ -19,7 +19,11 @@ class MiembroDao {
     }
 
     async deleteMiembroById(id) {
-        await  Miembro.deleteOne({ _id: id });
+        await Miembro.deleteOne({ _id: id });
+    }
+
+    async countMiembros() {
+        return await Miembro.countDocuments({});
     }
 
 }

@@ -23,4 +23,11 @@ router.delete('/miembro/:id', (req, res) => {
     miembroControl.deleteMiembro(req, res);
 });
 
+router.get('/totalMiembros', (req, res) => {
+    miembroControl.getTotalMiembros(req, res);
+});
+
+router.get('/ganancias', (req, res) => {
+    miembroControl.getGananciasDelMes(req, res);
+});
 module.exports = router;

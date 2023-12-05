@@ -23,6 +23,8 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -70,6 +72,7 @@
 
 
 
+
         <!-- Sidebar Menu -->
         <sidebar-component></sidebar-component>
 
@@ -92,9 +95,88 @@
 
           </div>
 
+          <script>
+            const token_bearer = localStorage.getItem('token');
+            $(document).ready(function () {
+              // Función para actualizar la información de los cards
+              function actualizarInfoCards() {
+                // Realizar una solicitud AJAX para obtener la información del servidor
+                $.ajax({
+                  url: '/api/v1/ganancias',  // Cambia esto a la ruta correcta de tu API
+                  method: 'GET',
+                  headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                  success: function (data) {
+                    // Actualizar el contenido del primer card
+                    $('#ingresosPagadosText').text('$' + data.ingresosPagados);
+          
+                    // Realizar una solicitud AJAX adicional para obtener más información
+                    $.ajax({
+                      url: '/api/v1/totalMiembros',  // Cambia esto a la ruta correcta de tu API
+                      method: 'GET',
+                      headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                      success: function (totalMiembrosData) {
+                        // Actualizar el contenido del segundo card
+                        $('#totalMiembrosText').text(totalMiembrosData.totalMiembros + ' miembros');
+          
+                        // Realizar una solicitud AJAX adicional para obtener más información
+                        $.ajax({
+                          url: '/api/v1/totalMiembros',  // Cambia esto a la ruta correcta de tu API
+                          method: 'GET',
+                          headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                          success: function (inscritosEsteMesData) {
+                            // Actualizar el contenido del tercer card
+                            $('#inscritosEsteMesCard .card-text').text('Total Inscritos: ' + inscritosEsteMesData.totalInscritos);
+          
+                            // Realizar una solicitud AJAX adicional para obtener más información
+                            $.ajax({
+                              url: '/api/v1/ganancias',  // Cambia esto a la ruta correcta de tu API
+                              method: 'GET',
+                              headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token_bearer}`,
+                                },
+                              success: function (ingresosEsteMesData) {
+                                // Actualizar el contenido del cuarto card
+                                $('#ingresosEsteMesCard .card-text').text('Total Ingresos: $' + ingresosEsteMesData.totalIngresos);
+                              },
+                              error: function (error) {
+                                console.error('Error al obtener ingresos este mes:', error);
+                              }
+                            });
+                          },
+                          error: function (error) {
+                            console.error('Error al obtener inscritos este mes:', error);
+                          }
+                        });
+                      },
+                      error: function (error) {
+                        console.error('Error al obtener total de miembros:', error);
+                      }
+                    });
+                  },
+                  error: function (error) {
+                    console.error('Error al obtener ingresos pagados:', error);
+                  }
+                });
+              }
+          
+              // Llamar a la función al cargar la página
+              actualizarInfoCards();
+            });
+          </script>
+
           <div class="row" style="padding-left:10px">
             <div class="col-md-3">
-              <div class="card mt-3"
+              <div id="ingresosPagadosCard" class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body">
 
@@ -106,12 +188,12 @@
                   <br>
                   <br>
                   <br>
-                  <p class="card-text" style="font-size: 1.4em; color: #727270; text-align: end;">$0</p>
+                  <p id="ingresosPagadosText" class="card-text"  style="font-size: 1.4em; color: #727270; text-align: end;">$0</p>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card mt-3"
+              <div id="totalMiembrosCard" class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body" style="background-color: #727270;">
                   <h5 class="card-title" style="font-size: 1.5em; color: #ffea2b; font-weight:600">Total Miembros</h5>
@@ -121,7 +203,7 @@
                   <br>
                   <br>
                   <br>
-                  <p class="card-text" style="font-size: 1.4em; color: #ffea2b; text-align: end;">0 miembros</p>
+                  <p class="card-text" id="totalMiembrosText" style="font-size: 1.4em; color: #ffea2b; text-align: end;">0 miembros</p>
                 </div>
               </div>
             </div>
