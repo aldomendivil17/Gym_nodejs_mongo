@@ -1,5 +1,6 @@
 const Miembro = require('../models/miembro');
 const MiembroDAO = require('../daos/miembroDao');
+const Membresia = require('../models/membresia');
 
 // Funciones del controlador
 
@@ -85,11 +86,36 @@ exports.deleteMiembro = async (req, res) => {
     }
 }
 
-exports.getTotalMiembros= async (req, res) => {
+exports.getTotalMiembros = async (req, res) => {
     try {
-        const toatlMiembros = await MiembroDAO.countMiembros();
-        res.json({ toatlMiembros });
+        const totalMiembros = await MiembroDAO.countMiembros();
+        res.json({ totalMiembros });
     } catch (err) {
         res.status(500).json({ error: 'No se pudo obtener el total de miembros.' });
+    }
+};
+
+exports.getGananciasDelMes = async (req, res) => {
+    try {
+        // Obtén el primer día del mes actual
+        const fechaInicioMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+        // Obtén todos los miembros con sus membresías asociadas
+        const miembros = await MiembroDAO.findAllMiembros();
+
+        // Filtra los miembros con membresías renovadas durante el mes actual
+        const miembrosConMembresiaDelMes = miembros.filter((miembro) => {
+            return miembro.id_membresia && miembro.id_membresia.fecha_renovacion >= fechaInicioMes;
+        });
+
+        // Calcula las ganancias sumando los costos de las membresías de los miembros filtrados
+        const gananciasDelMes = miembrosConMembresiaDelMes.reduce((totalGanancias, miembro) => {
+            return totalGanancias + miembro.id_membresia.costo;
+        }, 0); 
+
+        res.json({ gananciasDelMes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'No se pudo obtener las ganancias del mes' });
     }
 };

@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 
 </head>
 
@@ -134,7 +137,7 @@
                                 },
                           success: function (inscritosEsteMesData) {
                             // Actualizar el contenido del tercer card
-                            $('#inscritosEsteMesCard .card-text').text('Total Inscritos: ' + inscritosEsteMesData.totalInscritos);
+                            $('#inscritosEsteMesText').text('Total Inscritos: ' + inscritosEsteMesData.totalInscritos);
           
                             // Realizar una solicitud AJAX adicional para obtener más información
                             $.ajax({
@@ -146,7 +149,7 @@
                                 },
                               success: function (ingresosEsteMesData) {
                                 // Actualizar el contenido del cuarto card
-                                $('#ingresosEsteMesCard .card-text').text('Total Ingresos: $' + ingresosEsteMesData.totalIngresos);
+                                $('#ingresosEsteMesText').text('Total Ingresos: $' + ingresosEsteMesData.totalIngresos);
                               },
                               error: function (error) {
                                 console.error('Error al obtener ingresos este mes:', error);
@@ -175,6 +178,9 @@
           </script>
 
           <div class="row" style="padding-left:10px">
+            <!-- Originalmente se implementaban 4 cards para display de informacion, 
+            pero debido a unos conflictos en el codigo y falta de tiempo solo se implementara 1.
+            
             <div class="col-md-3">
               <div id="ingresosPagadosCard" class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
@@ -191,7 +197,7 @@
                   <p id="ingresosPagadosText" class="card-text"  style="font-size: 1.4em; color: #727270; text-align: end;">$0</p>
                 </div>
               </div>
-            </div>
+            </div>-->
             <div class="col-md-3">
               <div id="totalMiembrosCard" class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
@@ -206,9 +212,9 @@
                   <p class="card-text" id="totalMiembrosText" style="font-size: 1.4em; color: #ffea2b; text-align: end;">0 miembros</p>
                 </div>
               </div>
-            </div>
+            </div> <!--
             <div class="col-md-3">
-              <div class="card mt-3"
+              <div id="inscritosEsteMesCard"class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body">
                   <h5 class="card-title" style="font-size: 1.5em; color: #727270; font-weight:600">Inscritos este Mes
@@ -219,12 +225,12 @@
                   <br>
                   <br>
                   <br>
-                  <p class="card-text" style="font-size: 1.4em; color: #727270; text-align: end;">Total Inscritos: 0</p>
+                  <p id="inscritosEsteMesText" class="card-text" style="font-size: 1.4em; color: #727270; text-align: end;">Total Inscritos: 0</p>
                 </div>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="card mt-3"
+              <div id="ingresosEsteMesCard" class="card mt-3"
                 style="height:200px; width:100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
                 <div class="card-body" style="background-color:  #727270">
                   <h5 class="card-title" style="font-size: 1.5em; color:  #ffea2b; font-weight:600">Ingresos este Mes
@@ -235,11 +241,11 @@
                   <br>
                   <br>
                   <br>
-                  <p class="card-text" style="font-size: 1.4em; color: #ffea2b; text-align: end;">Total Ingresos: $0</p>
+                  <p id="ingresosEsteMesText" class="card-text" style="font-size: 1.4em; color: #ffea2b; text-align: end;">Total Ingresos: $0</p>
                 </div>
               </div>
 
-            </div>
+            </div>-->
 
           </div>
         </div>
